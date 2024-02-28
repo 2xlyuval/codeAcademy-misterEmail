@@ -19,7 +19,7 @@
     background-image: url(../../imgs/star-empty.png);
 }
 
-.email-selection-btns>.email-star.starred {
+.email-selection-btns>.email-star.checked {
     background-image: url(../../imgs/star-full.png);
 }
 
@@ -35,7 +35,7 @@
     background-image: url(../../imgs/envelop-close.png);
 }
 
-.email-actions>.email-read.readed {
+.email-actions>.email-read.checked {
     background-image: url(../../imgs/envelop-open.png);
 }
 

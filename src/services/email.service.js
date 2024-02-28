@@ -150,13 +150,13 @@ function remove(id) {
   return storageService.remove(STORAGE_KEY, id);
 }
 
-//TODO: not sure if needed
-function save(robotToSave) {
-  if (robotToSave.id) {
-    return storageService.put(STORAGE_KEY, robotToSave);
+function save(emailToSave) {
+  if (emailToSave.id) {
+    return storageService.put(STORAGE_KEY, emailToSave);
   } else {
-    robotToSave.isOn = false;
-    return storageService.post(STORAGE_KEY, robotToSave);
+    //Q - dont understand when it post new email?
+    emailToSave.isOn = false;
+    return storageService.post(STORAGE_KEY, emailToSave);
   }
 }
 

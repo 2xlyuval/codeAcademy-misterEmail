@@ -21,7 +21,33 @@ export function EmailIndex() {
       const emails = await emailService.query();
       setEmails(emails);
     } catch (error) {
-      console.log("Error loding robots", error);
+      console.log("Error loding emails", error);
+    }
+  }
+
+  async function onRemoveEmail(emailId) {
+    try {
+      await emailService.remove(emailId);
+      //update emails state to save api calls
+      setEmails((emailsPrev) => {
+        return emailsPrev.filter((email) => email.id !== emailId);
+      });
+    } catch (error) {
+      console.log("Error deleting email", error);
+    }
+  }
+
+  async function onUpdateEmail(email) {
+    try {
+      const updatedEmail = await emailService.save(email);
+      //update emails state to save api calls
+      setEmails((emailsPrev) => {
+        return emailsPrev.map((currEmail) => {
+          return currEmail.id === updatedEmail.id ? updatedEmail : currEmail;
+        });
+      });
+    } catch (error) {
+      console.log("Error updating email", error);
     }
   }
 
@@ -31,7 +57,11 @@ export function EmailIndex() {
   return (
     <section>
       <h1>Email App</h1>
-      <EmailList emails={emails} />
+      <EmailList
+        emails={emails}
+        onRemoveEmail={onRemoveEmail}
+        onUpdateEmail={onUpdateEmail}
+      />
     </section>
   );
 }
