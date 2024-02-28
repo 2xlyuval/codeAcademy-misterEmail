@@ -1,0 +1,44 @@
+.email-selection-btns>div,
+.email-actions>div {
+    width: 20px;
+    height: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 20px;
+}
+
+.email-selection-btns>.email-drag-handle {
+    background-image: url(../../imgs/drag-handle.png);
+}
+
+.email-selection-btns>.email-checbox {
+    background-image: url(../../imgs/checkbox.png);
+}
+
+.email-selection-btns>.email-star {
+    background-image: url(../../imgs/star-empty.png);
+}
+
+.email-selection-btns>.email-star.starred {
+    background-image: url(../../imgs/star-full.png);
+}
+
+.email-actions>.email-archive {
+    background-image: url(../../imgs/archive.png);
+}
+
+.email-actions>.email-delete {
+    background-image: url(../../imgs/delete.png);
+}
+
+.email-actions>.email-read {
+    background-image: url(../../imgs/envelop-close.png);
+}
+
+.email-actions>.email-read.readed {
+    background-image: url(../../imgs/envelop-open.png);
+}
+
+.email-actions>.email-snooze {
+    background-image: url(../../imgs/snooze.png);
+}
