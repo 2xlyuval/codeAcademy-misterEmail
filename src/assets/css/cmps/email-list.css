@@ -32,11 +32,11 @@
 }
 
 .email-actions>.email-read {
-    background-image: url(../../imgs/envelop-close.png);
+    background-image: url(../../imgs/envelop-open.png);
 }
 
 .email-actions>.email-read.checked {
-    background-image: url(../../imgs/envelop-open.png);
+    background-image: url(../../imgs/envelop-close.png);
 }
 
 .email-actions>.email-snooze {

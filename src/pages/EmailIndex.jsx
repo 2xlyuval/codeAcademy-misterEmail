@@ -2,10 +2,13 @@ import { useState } from "react";
 import { emailService } from "../services/email.service";
 import { useEffect } from "react";
 import { EmailList } from "../cmps/EmailList";
+import { Outlet, Route, Routes, useParams } from "react-router";
+import { EmailDetails } from "../cmps/EmailDetails";
 
 export function EmailIndex() {
   //I use null and not [] beacuse until the i get the data the com will try to render an empty array and it will throw error
   const [emails, setEmails] = useState(null);
+  const params = useParams();
   const loggedinUser = {
     email: "user@appsus.com",
     fullname: "Mahatma Appsus",
@@ -57,11 +60,15 @@ export function EmailIndex() {
   return (
     <section>
       <h1>Email App</h1>
-      <EmailList
-        emails={emails}
-        onRemoveEmail={onRemoveEmail}
-        onUpdateEmail={onUpdateEmail}
-      />
+      {params.emailId ? (
+        <Outlet />
+      ) : (
+        <EmailList
+          emails={emails}
+          onRemoveEmail={onRemoveEmail}
+          onUpdateEmail={onUpdateEmail}
+        />
+      )}
     </section>
   );
 }
