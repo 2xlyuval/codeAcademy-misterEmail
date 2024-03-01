@@ -4,15 +4,15 @@ ul.email-list {
     background: white;
     border-radius: 16px;
     overflow-y: hidden;
+    position: relative;
 }
 
 /* email list item */
 
 li.email-list-item {
-    padding-bottom: 10px;
-    padding-top: 10px;
     box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.122);
     cursor: pointer;
+    height: 40px;
 }
 
 li.email-list-item:hover {
@@ -42,6 +42,7 @@ li.email-list-item .email-from {
     text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block;
+    font-weight: 700;
 }
 
 li.email-list-item .email-subject {
@@ -49,6 +50,7 @@ li.email-list-item .email-subject {
     text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block;
+    font-weight: 700;
 }
 
 li.email-list-item .email-body {
@@ -71,6 +73,19 @@ li.email-list-item .dash {
     color: var(--txt-color-secondery);
     text-align: right;
     padding-right: 16px;
+    font-weight: 700;
+}
+
+/* email list is read*/
+
+li.email-list-item.isRead {
+    background-color: #f2f6fc;
+}
+
+li.email-list-item.isRead .email-from,
+li.email-list-item.isRead .email-subject,
+li.email-list-item.isRead .email-sentAt {
+    font-weight: 500;
 }
 
 /* email item icons */
@@ -84,10 +99,16 @@ li.email-list-item .dash {
     background-size: 20px;
 }
 
+.email-actions>div {
+    width: 40px;
+    height: 40px;
+}
+
 .email-actions {
     display: none;
     position: absolute;
     right: 0;
+    margin-right: 6px;
 }
 
 li.email-list-item:hover .email-actions {
@@ -96,6 +117,53 @@ li.email-list-item:hover .email-actions {
 
 li.email-list-item:hover .email-sentAt {
     display: none;
+}
+
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::after {
+    content: "";
+    display: block;
+    opacity: 0;
+    transition-duration: .15s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    background: none;
+    transition-property: transform, opacity;
+    border-radius: 50%;
+    transform: scale(0);
+    position: absolute;
+    width: 40px;
+    height: 40px;
+}
+
+.email-selection-btns>[data-tooltip]::after {
+    bottom: -10px;
+    left: -10px;
+    right: -10px;
+    top: -10px;
+}
+
+[data-tooltip]::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    background-color: rgb(32 33 36 / 83%);
+    color: white;
+    border-radius: 4px;
+    text-transform: capitalize;
+    font-size: 12px;
+    padding: 3px 5px;
+    font-weight: 500;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    display: none;
+    width: max-content;
+}
+
+.email-selection-btns>[data-tooltip]::before {
+    bottom: -10px;
 }
 
 .email-selection-btns>.email-drag-handle {
@@ -150,4 +218,14 @@ li.email-list-item:hover .email-checbox {
 
 li.email-list-item:hover .email-star {
     opacity: 1;
+}
+
+[data-tooltip]:hover::after {
+    background-color: rgba(32, 33, 36, 0.059);
+    opacity: 1;
+    transform: scale(1);
+}
+
+[data-tooltip]:hover::before {
+    display: block;
 }

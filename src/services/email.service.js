@@ -173,6 +173,19 @@ function _createEmails() {
   let emails = utilService.loadFromStorage(STORAGE_KEY);
   if (!emails || !emails.length) {
     emails = emailsDummyData;
+    for (let i = 11; i <= 50; i++) {
+      emails.push({
+        id: `e${i}`,
+        subject: `Email Subject ${i}`,
+        body: `Email Body ${i}`,
+        isRead: Math.random() < 0.5,
+        isStarred: Math.random() < 0.5,
+        sentAt: 1646062191000 - i * 86400000, // Example timestamp, you can adjust as needed
+        removedAt: null,
+        from: `sender${i}@example.com`,
+        to: "user@appsus.com",
+      });
+    }
     utilService.saveToStorage(STORAGE_KEY, emails);
   }
 }
