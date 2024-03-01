@@ -4,7 +4,7 @@ import { utilService } from "../services/util.service";
 export function EmailPreview({ email }) {
   return (
     <Link to={`/email/${email.id}`}>
-      <article className="email-preview">
+      <article className="email-preview flex">
         <div className="email-from">{email.from}</div>
         <div className="email-content">
           <span className="email-subject">{email.subject}</span>

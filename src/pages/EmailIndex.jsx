@@ -58,17 +58,19 @@ export function EmailIndex() {
   if (!emails) return <div>Loading...</div>;
 
   return (
-    <section className="container email-index">
-      <h1>Email App</h1>
-      {params.emailId ? (
-        <Outlet />
-      ) : (
-        <EmailList
-          emails={emails}
-          onRemoveEmail={onRemoveEmail}
-          onUpdateEmail={onUpdateEmail}
-        />
-      )}
+    <section className="email-index">
+      <header></header>
+      <main>
+        {params.emailId ? (
+          <Outlet />
+        ) : (
+          <EmailList
+            emails={emails}
+            onRemoveEmail={onRemoveEmail}
+            onUpdateEmail={onUpdateEmail}
+          />
+        )}
+      </main>
     </section>
   );
 }

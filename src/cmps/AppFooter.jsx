@@ -1,7 +1,7 @@
 export function AppFooter() {
   return (
     <footer>
-      <section className="container">robotRights 2023 &copy;</section>
+      <section className="container">misterEmail 2024 &copy;</section>
     </footer>
   );
 }

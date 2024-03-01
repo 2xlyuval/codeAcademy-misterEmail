@@ -1,7 +1,7 @@
 section.about-us {
     background: #f8f9fa;
     padding: 20px;
-    min-height: 50rem;
+    flex: 1;
 }
 
 section.about-us h1 {

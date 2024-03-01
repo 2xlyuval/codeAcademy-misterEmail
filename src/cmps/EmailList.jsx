@@ -12,11 +12,11 @@ export function EmailList({ emails, onRemoveEmail, onUpdateEmail }) {
   }
 
   return (
-    <ul className="email-list">
+    <ul className="email-list clean-list">
       {emails.map((email) => {
         return (
-          <li key={email.id}>
-            <div className="email-selection-btns">
+          <li key={email.id} className="email-list-item flex">
+            <div className="email-selection-btns flex">
               <div className="email-drag-handle"></div>
               <div className="email-checbox"></div>
               <div
@@ -25,7 +25,7 @@ export function EmailList({ emails, onRemoveEmail, onUpdateEmail }) {
               ></div>
             </div>
             <EmailPreview email={email} />
-            <div className="email-actions">
+            <div className="email-actions flex">
               <div className="email-archive"></div>
               <div
                 className="email-delete"
