@@ -1,10 +1,9 @@
+.email-index * {
+    font-size: 14px;
+    color: var(--txt-color-primary);
+}
+
 .email-index {
     flex: 1;
     background-color: var(--container-bg);
-}
-
-ul.email-list {
-    background: white;
-    border-radius: 16px;
-    overflow-y: hidden;
 }

@@ -2,7 +2,7 @@
     position: sticky;
     top: 0;
     background: white;
-    color: var(--txt-color);
+    color: var(--txt-color-secondery);
     box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
 }
 
@@ -51,11 +51,11 @@
 }
 
 .app-nav ul li a:hover {
-    color: var(--txt-color-active);
+    color: var(--txt-color-primary);
 }
 
 .app-nav ul li a.active {
-    color: var(--txt-color-active);
+    color: var(--txt-color-primary);
     border-bottom: 2px solid var(--primary-color);
 }
 

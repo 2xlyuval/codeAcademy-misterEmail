@@ -3,6 +3,7 @@ export const utilService = {
   saveToStorage,
   loadFromStorage,
   formatTimeStamp,
+  getStringBeforeChar,
 };
 
 function makeId(length = 5) {
@@ -43,4 +44,8 @@ function formatTimeStamp(timestamp) {
     const day = dt.toLocaleDateString([], { day: "2-digit" });
     return `${day} ${month}`;
   }
+}
+
+function getStringBeforeChar(string, char) {
+  return string.substring(0, string.indexOf(char));
 }
