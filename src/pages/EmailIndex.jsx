@@ -58,7 +58,7 @@ export function EmailIndex() {
   if (!emails) return <div>Loading...</div>;
 
   return (
-    <section>
+    <section className="container email-index">
       <h1>Email App</h1>
       {params.emailId ? (
         <Outlet />
