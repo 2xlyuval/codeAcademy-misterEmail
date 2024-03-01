@@ -1,0 +1,48 @@
+section.about-us {
+    background: #f8f9fa;
+    padding: 20px;
+    min-height: 50rem;
+}
+
+section.about-us h1 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+}
+
+section.about-us h2 {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+}
+
+section.about-us p {
+    text-align: justify;
+}
+
+.tabs {
+    margin: 50px auto 20px;
+    width: fit-content;
+}
+
+.tabs a {
+    display: inline-block;
+    width: 250px;
+    text-align: center;
+    font-size: 18px;
+    padding: 16px;
+    color: #5f6368;
+    border-bottom: 2px solid #dadce0;
+}
+
+.tabs a:hover {
+    background-color: #f1f3f4;
+}
+
+.tabs a.active {
+    color: #202124;
+    font-weight: 500;
+    border-bottom-color: #1a73e8;
+}
