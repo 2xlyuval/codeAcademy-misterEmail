@@ -1,6 +1,7 @@
 import { EmailPreview } from "./EmailPreview";
 
 export function EmailList({ emails, onRemoveEmail, onUpdateEmail }) {
+  //TODO - maybe create one function called - toggleState
   function toggleStar(email) {
     const updatedEmail = { ...email, isStarred: !email.isStarred };
     onUpdateEmail(updatedEmail);

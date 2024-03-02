@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { emailService } from "../services/email.service";
+import { useNavigate, useOutletContext, useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { emailService } from "../services/email.service";
 
 export function EmailDetails() {
   const [email, setEmail] = useState(null);
   const params = useParams();
+  const navigate = useNavigate();
+  const onUpdateEmail = useOutletContext();
 
   useEffect(() => {
     loadEmail();
@@ -15,9 +17,17 @@ export function EmailDetails() {
     try {
       const email = await emailService.getById(params.emailId);
       setEmail(email);
+      if (email.isRead == false) updateEmailisRead(email, true);
     } catch (error) {
       console.log("error load email by id", error);
+      navigate("/email");
     }
+  }
+
+  // i need to change it beacste it dosent set update email list state
+  function updateEmailisRead(email, state) {
+    const updatedEmail = { ...email, isRead: state };
+    onUpdateEmail(updatedEmail);
   }
 
   if (!email) return <div>Loading..</div>;
