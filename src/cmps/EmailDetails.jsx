@@ -7,7 +7,7 @@ export function EmailDetails() {
   const [email, setEmail] = useState(null);
   const params = useParams();
   const navigate = useNavigate();
-  const onUpdateEmail = useOutletContext();
+  const { onUpdateEmail, emails } = useOutletContext();
 
   useEffect(() => {
     loadEmail();
@@ -30,12 +30,45 @@ export function EmailDetails() {
     onUpdateEmail(updatedEmail);
   }
 
+  function getAdjacentEmailId(currentId, direction) {
+    // Find the index of the email with the current ID
+    const currentIndex = emails.findIndex((email) => email.id === currentId);
+
+    // Determine the index of the adjacent email based on the direction
+    let adjacentIndex;
+    if (direction === "next") {
+      adjacentIndex = currentIndex + 1;
+    } else if (direction === "prev") {
+      adjacentIndex = currentIndex - 1;
+    }
+
+    // If the current ID is not found or it's at the boundary, return null
+    if (adjacentIndex < 0 || adjacentIndex >= emails.length) {
+      return null;
+    }
+
+    // Return the ID of the adjacent email
+    return emails[adjacentIndex].id;
+  }
+
   if (!email) return <div>Loading..</div>;
   return (
     <section className="email-details">
       <div className="top-bar">
-        <Link to="/email">
-          <div className="back-btn">back</div>
+        <Link to="/email" className="back-btn">
+          Return
+        </Link>
+        <Link
+          to={`/email/${getAdjacentEmailId(email.id, "next")}`}
+          className="next-email-btn"
+        >
+          Next
+        </Link>
+        <Link
+          to={`/email/${getAdjacentEmailId(email.id, "prev")}`}
+          className="prev-email-btn"
+        >
+          prev
         </Link>
         <div
           className="email-delete"

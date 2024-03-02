@@ -62,7 +62,7 @@ export function EmailIndex() {
       <header></header>
       <main>
         {params.emailId ? (
-          <Outlet context={onUpdateEmail} />
+          <Outlet context={{ onUpdateEmail, emails }} />
         ) : (
           <EmailList
             emails={emails}
