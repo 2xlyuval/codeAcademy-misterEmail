@@ -11,7 +11,7 @@ export function EmailDetails() {
 
   useEffect(() => {
     loadEmail();
-  }, [params]);
+  }, [params.emailId]);
 
   async function loadEmail() {
     try {

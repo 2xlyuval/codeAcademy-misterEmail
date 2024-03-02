@@ -6,6 +6,7 @@ export const emailService = {
   save,
   remove,
   getById,
+  getDefaultFilter,
 };
 
 const STORAGE_KEY = "emails";
@@ -125,21 +126,19 @@ const emailsDummyData = [
 _createEmails();
 
 async function query(filterBy) {
-  const emails = await storageService.query(STORAGE_KEY);
-  //TODO: change to email filtering
+  let emails = await storageService.query(STORAGE_KEY);
   if (filterBy) {
-    // var { type, maxBatteryStatus, minBatteryStatus, model } = filterBy;
-    // maxBatteryStatus = maxBatteryStatus || Infinity;
-    // minBatteryStatus = minBatteryStatus || 0;
-    // emails = emails.filter(
-    //   (robot) =>
-    //     robot.type.toLowerCase().includes(type.toLowerCase()) &&
-    //     robot.model.toLowerCase().includes(model.toLowerCase()) &&
-    //     robot.batteryStatus < maxBatteryStatus &&
-    //     robot.batteryStatus > minBatteryStatus
-    // );
+    const { isRead } = filterBy;
+    if (isRead != null)
+      emails = emails.filter((email) => email.isRead == isRead);
   }
   return emails;
+}
+
+function getDefaultFilter() {
+  return {
+    isRead: null,
+  };
 }
 
 function getById(id) {
