@@ -128,16 +128,22 @@ _createEmails();
 async function query(filterBy) {
   let emails = await storageService.query(STORAGE_KEY);
   if (filterBy) {
-    const { isRead } = filterBy;
-    if (isRead != null)
+    const { isRead, text } = filterBy;
+    if (isRead != undefined)
       emails = emails.filter((email) => email.isRead == isRead);
+    emails = emails.filter(
+      (email) =>
+        email.subject.toLowerCase().includes(text.toLowerCase()) ||
+        email.body.toLowerCase().includes(text.toLowerCase())
+    );
   }
   return emails;
 }
 
 function getDefaultFilter() {
   return {
-    isRead: null,
+    text: "",
+    isRead: true,
   };
 }
 

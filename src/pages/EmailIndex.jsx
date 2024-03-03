@@ -2,27 +2,30 @@ import { useState, useEffect } from "react";
 import { Outlet, useParams } from "react-router";
 import { EmailList } from "../cmps/EmailList";
 import { emailService } from "../services/email.service";
+import { EmailFilter } from "../cmps/EmailFilter";
 
 export function EmailIndex() {
   //I use null and not [] beacuse until the i get the data the com will try to render an empty array and it will throw error
   const [emails, setEmails] = useState(null);
-  const [filterby, setFilterBy] = useState(emailService.getDefaultFilter());
+  const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter());
   const params = useParams();
   const loggedinUser = {
     email: "user@appsus.com",
     fullname: "Mahatma Appsus",
   };
 
-  console.log(filterby);
-
   // i load the data with useEfffect becuse if not i will get into a loop od rendering becuse the state keep changing
   useEffect(() => {
     loadEmails();
-  }, []);
+  }, [filterBy]);
+
+  function onSetFilter(fieldsToUpdate) {
+    setFilterBy((prevFilter) => ({ ...prevFilter, ...fieldsToUpdate }));
+  }
 
   async function loadEmails() {
     try {
-      const emails = await emailService.query(filterby);
+      const emails = await emailService.query(filterBy);
       setEmails(emails);
     } catch (error) {
       console.log("Error loding emails", error);
@@ -60,7 +63,9 @@ export function EmailIndex() {
 
   return (
     <section className="email-index">
-      <header></header>
+      <header>
+        <EmailFilter filterBy={filterBy} onSetFilter={onSetFilter} />
+      </header>
       <main>
         {params.emailId ? (
           <Outlet context={{ onUpdateEmail, emails }} />
