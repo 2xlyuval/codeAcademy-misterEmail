@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "http://2xlyuval.github.io/codeAcademy-misterEmail/",
   "scripts": {
     "dev": "vite",
     "predeploy": "npm run build",
