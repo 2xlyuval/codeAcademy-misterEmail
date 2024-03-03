@@ -3,7 +3,7 @@
 ul.email-list {
     background: white;
     border-radius: 16px;
-    overflow-y: hidden;
+    overflow-y: scroll;
     position: relative;
 }
 

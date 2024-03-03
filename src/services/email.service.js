@@ -143,7 +143,7 @@ async function query(filterBy) {
 function getDefaultFilter() {
   return {
     text: "",
-    isRead: true,
+    isRead: undefined,
   };
 }
 

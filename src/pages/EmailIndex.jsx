@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Outlet, useParams } from "react-router";
 import { EmailList } from "../cmps/EmailList";
 import { emailService } from "../services/email.service";
-import { EmailFilter } from "../cmps/EmailFilter";
+import { EmailHeader } from "../cmps/EmailHeader";
+import { EmailMainMenu } from "../cmps/EmailMainMenu";
 
 export function EmailIndex() {
   //I use null and not [] beacuse until the i get the data the com will try to render an empty array and it will throw error
@@ -63,10 +64,9 @@ export function EmailIndex() {
 
   return (
     <section className="email-index">
-      <header>
-        <EmailFilter filterBy={filterBy} onSetFilter={onSetFilter} />
-      </header>
-      <main>
+      <EmailHeader filterBy={filterBy} onSetFilter={onSetFilter} />
+      <main className="email-main">
+        <EmailMainMenu />
         {params.emailId ? (
           <Outlet context={{ onUpdateEmail, emails }} />
         ) : (
@@ -76,6 +76,7 @@ export function EmailIndex() {
             onUpdateEmail={onUpdateEmail}
           />
         )}
+        <section className="side-panel"></section>
       </main>
     </section>
   );

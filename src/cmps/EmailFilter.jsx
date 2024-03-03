@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { svg } from "../assets/svg.jsx";
 
 export function EmailFilter({ filterBy, onSetFilter }) {
   const [filterByToEdit, setFilterByToEdit] = useState(filterBy);
@@ -34,14 +35,20 @@ export function EmailFilter({ filterBy, onSetFilter }) {
   return (
     <form className="email-filter-form" onSubmit={onSubmitFilter}>
       <label htmlFor="search">
+        <span className="icon-btn" data-tooltip="search">
+          {svg.searchIcon}
+        </span>
         <input
           id="search"
           name="text"
-          placeholder="search"
+          placeholder="Search mail"
           type="text"
           value={filterByToEdit.text}
           onChange={handleChange}
         />
+        <span className="icon-btn" data-tooltip="Show search options">
+          {svg.advancedSearchIcon}
+        </span>
       </label>
 
       <label htmlFor="email-isRead-select">Email Status</label>

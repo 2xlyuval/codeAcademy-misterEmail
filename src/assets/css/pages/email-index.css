@@ -7,3 +7,9 @@
     flex: 1;
     background-color: var(--container-bg);
 }
+
+main .email-main {
+    display: grid;
+    grid-template-columns: minmax(72px, 256px) 1fr 56px;
+    grid-auto-rows: calc(100vh - 62px - 64px - 48px);
+}

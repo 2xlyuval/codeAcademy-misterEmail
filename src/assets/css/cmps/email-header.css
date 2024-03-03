@@ -1,0 +1,71 @@
+.email-header {
+    display: grid;
+    grid-template-columns: 256px 1fr;
+    padding: 8px;
+}
+
+.email-header .main-menu-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin: 0 4px;
+    padding: 12px;
+    cursor: pointer;
+    height: 48px;
+    width: 48px;
+    align-items: center;
+    justify-content: center;
+}
+
+.email-header .main-menu-btn>span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background-color: var(--txt-color-secondery);
+}
+
+.email-header .gmail-logo {
+    width: 109px;
+    height: 40px;
+
+}
+
+.email-header input#search {
+    background-color: #eaf1fb;
+    border: none;
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: 500;
+    height: 46px;
+    max-width: 720px;
+    width: 100%;
+    padding: 0 48px;
+}
+
+.email-header .email-filter-form label {
+    position: relative;
+}
+
+.email-header .email-filter-form .icon-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.email-header .email-filter-form .icon-btn[data-tooltip]::after {
+    width: 36px;
+    height: 36px;
+}
+
+.email-header .email-filter-form .icon-btn:first-child {
+    left: 6px;
+}
+
+.email-header .email-filter-form .icon-btn:last-child {
+    right: 6px;
+}

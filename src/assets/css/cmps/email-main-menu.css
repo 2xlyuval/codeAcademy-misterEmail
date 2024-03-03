@@ -1,0 +1,54 @@
+section.main-menu {
+    padding-right: 16px;
+}
+
+.main-menu-item input {
+    display: none;
+}
+
+.compose-mail {
+    padding: 0 24px 0 20px;
+    min-width: 96px;
+    height: 56px;
+    margin: 8px 0 16px 8px;
+    letter-spacing: normal;
+    align-items: center;
+    background-color: #c2e7ff;
+    border-radius: 16px;
+    color: #001d35;
+    display: -webkit-inline-flex;
+    font-weight: 500;
+    text-transform: capitalize;
+    gap: 12px;
+}
+
+.compose-mail>span {
+    width: 24px;
+    height: 24px;
+}
+
+.main-menu-item label {
+    cursor: pointer;
+    align-items: center;
+    display: flex;
+    height: 32px;
+    padding: 0 12px 0 26px;
+    -webkit-transition: margin .15s cubic-bezier(0.4, 0, 0.2, 1), padding .15s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: margin .15s cubic-bezier(0.4, 0, 0.2, 1), padding .15s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 0 16px 16px 0;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.main-menu-item label span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 18px;
+}
+
+.main-menu-item input:checked+label {
+    background-color: #d2e3fc;
+    color: #001d35;
+    font-weight: 700;
+}
