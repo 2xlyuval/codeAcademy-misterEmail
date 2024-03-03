@@ -3,12 +3,14 @@ section.email-details {
     border-radius: 16px;
     overflow-y: scroll;
     position: relative;
+    margin-bottom: 16px;
 }
 
 section.email-details .top-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 4px;
 }
 
 section.email-details .top-bar .back-btn {

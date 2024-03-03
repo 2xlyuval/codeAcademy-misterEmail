@@ -68,7 +68,7 @@ export function EmailIndex() {
       <main className="email-main">
         <EmailMainMenu />
         {params.emailId ? (
-          <Outlet context={{ onUpdateEmail, emails }} />
+          <Outlet context={{ emails, onUpdateEmail, onRemoveEmail }} />
         ) : (
           <EmailList
             emails={emails}

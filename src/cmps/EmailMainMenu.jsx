@@ -52,6 +52,9 @@ export function EmailMainMenu() {
 }
 
 function MainMenuItem({ name, title, images }) {
+  function handleChange(ev) {
+    console.log(ev.target.value);
+  }
   return (
     <div className="main-menu-item">
       <input
@@ -59,7 +62,7 @@ function MainMenuItem({ name, title, images }) {
         type="radio"
         name="main-menu-filter"
         value={name}
-        checked
+        onChange={handleChange}
       />
       <label htmlFor={name}>
         <span>

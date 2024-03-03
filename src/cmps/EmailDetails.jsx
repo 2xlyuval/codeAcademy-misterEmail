@@ -8,7 +8,7 @@ export function EmailDetails() {
   const [email, setEmail] = useState(null);
   const params = useParams();
   const navigate = useNavigate();
-  const { onUpdateEmail, emails } = useOutletContext();
+  const { emails, onUpdateEmail, onRemoveEmail } = useOutletContext();
 
   useEffect(() => {
     loadEmail();
@@ -25,7 +25,6 @@ export function EmailDetails() {
     }
   }
 
-  // i need to change it beacste it dosent set update email list state
   function updateEmailisRead(email, state) {
     const updatedEmail = { ...email, isRead: state };
     onUpdateEmail(updatedEmail);
@@ -62,12 +61,18 @@ export function EmailDetails() {
           </Link>
           <div
             className="email-delete"
-            onClick={() => onRemoveEmail(email.id)}
+            onClick={() => {
+              onRemoveEmail(email.id);
+              navigate("/email");
+            }}
             data-tooltip="delete"
           ></div>
           <div
             className={`email-read ${email.isRead ? "checked" : ""}`}
-            onClick={() => toggleRead(email)}
+            onClick={() => {
+              updateEmailisRead(email, false);
+              navigate("/email");
+            }}
             data-tooltip="mark as unread"
           ></div>
         </div>
