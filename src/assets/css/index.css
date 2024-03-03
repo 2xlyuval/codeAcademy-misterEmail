@@ -13,4 +13,5 @@
 @import "./cmps/app-header.css";
 @import "./cmps/email-list.css";
 @import "./cmps/email-header.css";
-@import "./cmps/email-main-menu.css"
+@import "./cmps/email-main-menu.css";
+@import "./cmps/email-details.css";

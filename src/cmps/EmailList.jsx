@@ -13,42 +13,47 @@ export function EmailList({ emails, onRemoveEmail, onUpdateEmail }) {
   }
 
   return (
-    <ul className="email-list clean-list">
-      {emails.map((email) => {
-        return (
-          <li
-            key={email.id}
-            className={`email-list-item flex align-center ${
-              email.isRead ? "isRead" : ""
-            }`}
-          >
-            <div className="email-selection-btns flex align-center">
-              <div className="email-drag-handle"></div>
-              <div className="email-checbox" data-tooltip="select"></div>
-              <div
-                className={`email-star ${email.isStarred ? "checked" : ""}`}
-                onClick={() => toggleStar(email)}
-                data-tooltip={email.isStarred ? "starred" : "not starred"}
-              ></div>
-            </div>
-            <EmailPreview email={email} />
-            <div className="email-actions flex align-center">
-              <div className="email-archive" data-tooltip="archive"></div>
-              <div
-                className="email-delete"
-                onClick={() => onRemoveEmail(email.id)}
-                data-tooltip="delete"
-              ></div>
-              <div
-                className={`email-read ${email.isRead ? "checked" : ""}`}
-                onClick={() => toggleRead(email)}
-                data-tooltip={email.isRead ? "mark as unread" : "mark as read"}
-              ></div>
-              <div className="email-snooze" data-tooltip="snooze"></div>
-            </div>
-          </li>
-        );
-      })}
-    </ul>
+    <section className="email-list-container">
+      <div className="email-list-header">all emails</div>
+      <ul className="email-list clean-list">
+        {emails.map((email) => {
+          return (
+            <li
+              key={email.id}
+              className={`email-list-item flex align-center ${
+                email.isRead ? "isRead" : ""
+              }`}
+            >
+              <div className="email-selection-btns flex align-center">
+                <div className="email-drag-handle"></div>
+                <div className="email-checbox" data-tooltip="select"></div>
+                <div
+                  className={`email-star ${email.isStarred ? "checked" : ""}`}
+                  onClick={() => toggleStar(email)}
+                  data-tooltip={email.isStarred ? "starred" : "not starred"}
+                ></div>
+              </div>
+              <EmailPreview email={email} />
+              <div className="email-actions flex align-center">
+                <div className="email-archive" data-tooltip="archive"></div>
+                <div
+                  className="email-delete"
+                  onClick={() => onRemoveEmail(email.id)}
+                  data-tooltip="delete"
+                ></div>
+                <div
+                  className={`email-read ${email.isRead ? "checked" : ""}`}
+                  onClick={() => toggleRead(email)}
+                  data-tooltip={
+                    email.isRead ? "mark as unread" : "mark as read"
+                  }
+                ></div>
+                <div className="email-snooze" data-tooltip="snooze"></div>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
   );
 }

@@ -1,0 +1,44 @@
+section.email-details {
+    background: white;
+    border-radius: 16px;
+    overflow-y: scroll;
+    position: relative;
+}
+
+section.email-details .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+section.email-details .top-bar .back-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+section.email-details .top-bar .back-btn img {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+
+section.email-details .top-bar .email-actions>div {
+    width: 40px;
+    height: 40px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 20px;
+}
+
+section.email-details .top-bar .email-navigation a {
+    position: relative;
+    font-size: 26px;
+    display: flex;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+}

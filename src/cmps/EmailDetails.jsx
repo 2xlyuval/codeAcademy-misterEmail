@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { emailService } from "../services/email.service";
+import arrowBack from "../assets/imgs/arrow_back.png";
 
 export function EmailDetails() {
   const [email, setEmail] = useState(null);
@@ -55,29 +56,37 @@ export function EmailDetails() {
   return (
     <section className="email-details">
       <div className="top-bar">
-        <Link to="/email" className="back-btn">
-          Return
-        </Link>
-        <Link
-          to={`/email/${getAdjacentEmailId(email.id, "next")}`}
-          className="next-email-btn"
-        >
-          Next
-        </Link>
-        <Link
-          to={`/email/${getAdjacentEmailId(email.id, "prev")}`}
-          className="prev-email-btn"
-        >
-          prev
-        </Link>
-        <div
-          className="email-delete"
-          onClick={() => onRemoveEmail(email.id)}
-        ></div>
-        <div
-          className={`email-read ${email.isRead ? "checked" : ""}`}
-          onClick={() => toggleRead(email)}
-        ></div>
+        <div className="email-actions flex align-center">
+          <Link to="/email" className="back-btn" data-tooltip="Back to inbox">
+            <img src={arrowBack} alt="" />
+          </Link>
+          <div
+            className="email-delete"
+            onClick={() => onRemoveEmail(email.id)}
+            data-tooltip="delete"
+          ></div>
+          <div
+            className={`email-read ${email.isRead ? "checked" : ""}`}
+            onClick={() => toggleRead(email)}
+            data-tooltip="mark as unread"
+          ></div>
+        </div>
+        <div className="email-navigation flex align-center">
+          <Link
+            to={`/email/${getAdjacentEmailId(email.id, "prev")}`}
+            className="prev-email-btn"
+            data-tooltip="newer"
+          >
+            &lsaquo;
+          </Link>
+          <Link
+            to={`/email/${getAdjacentEmailId(email.id, "next")}`}
+            className="next-email-btn"
+            data-tooltip="older"
+          >
+            &rsaquo;
+          </Link>
+        </div>
       </div>
       <h1>{email.subject}</h1>
       <div className="email-info">
