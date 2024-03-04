@@ -135,7 +135,8 @@ async function query(filterBy) {
     emails = emails.filter(
       (email) =>
         email.subject.toLowerCase().includes(text.toLowerCase()) ||
-        email.body.toLowerCase().includes(text.toLowerCase())
+        email.body.toLowerCase().includes(text.toLowerCase()) ||
+        email.from.toLowerCase().includes(text.toLowerCase())
     );
   }
   return emails;
