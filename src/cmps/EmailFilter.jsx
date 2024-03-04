@@ -12,7 +12,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
   function handleChange(ev) {
     let { name: field, value, type } = ev.target;
 
-    value = type === "select-one" ? convertToBoolian(value) : value;
+    value = type === "select-one" ? convertToBoolean(value) : value;
     setFilterByToEdit((prevFilter) => {
       return {
         ...prevFilter,
@@ -27,8 +27,8 @@ export function EmailFilter({ filterBy, onSetFilter }) {
   }
 
   // Q - cr
-  function convertToBoolian(value) {
-    var boolianVal = value === "undefined" ? undefined : value === "true";
+  function convertToBoolean(value) {
+    var boolianVal = value === "null" ? null : value === "true";
     return boolianVal;
   }
 
@@ -56,10 +56,10 @@ export function EmailFilter({ filterBy, onSetFilter }) {
       <select
         id="email-isRead-select"
         name="isRead"
-        value={filterByToEdit.isRead}
+        value={filterByToEdit.isRead ?? "null"}
         onChange={handleChange}
       >
-        <option value="undefined">All Emails</option>
+        <option value="null">All Emails</option>
         <option value="false">Un Read Emails</option>
         <option value="true">Read Emails</option>
       </select>

@@ -129,8 +129,9 @@ async function query(filterBy) {
   let emails = await storageService.query(STORAGE_KEY);
   if (filterBy) {
     const { isRead, text } = filterBy;
-    if (isRead != undefined)
+    if (isRead != null) {
       emails = emails.filter((email) => email.isRead == isRead);
+    }
     emails = emails.filter(
       (email) =>
         email.subject.toLowerCase().includes(text.toLowerCase()) ||
@@ -143,7 +144,7 @@ async function query(filterBy) {
 function getDefaultFilter() {
   return {
     text: "",
-    isRead: undefined,
+    isRead: null,
   };
 }
 
@@ -159,7 +160,6 @@ function save(emailToSave) {
   if (emailToSave.id) {
     return storageService.put(STORAGE_KEY, emailToSave);
   } else {
-    //Q - dont understand when it post new email?
     emailToSave.isOn = false;
     return storageService.post(STORAGE_KEY, emailToSave);
   }

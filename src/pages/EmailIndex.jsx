@@ -67,6 +67,7 @@ export function EmailIndex() {
       <EmailHeader filterBy={filterBy} onSetFilter={onSetFilter} />
       <main className="email-main">
         <EmailMainMenu />
+        {/* Q - cr */}
         {params.emailId ? (
           <Outlet context={{ emails, onUpdateEmail, onRemoveEmail }} />
         ) : (
