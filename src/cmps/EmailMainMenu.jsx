@@ -7,6 +7,7 @@ import snoozeFill from "../assets/imgs/snooze-fill.png";
 import sentOutline from "../assets/imgs/sent-outline.png";
 import sentFill from "../assets/imgs/sent-fill.png";
 import compose from "../assets/imgs/compose.png";
+import { NavLink } from "react-router-dom";
 
 export function EmailMainMenu() {
   const menuItems = [
@@ -14,11 +15,13 @@ export function EmailMainMenu() {
       name: "inbox",
       title: "inbox",
       images: { outline: inboxOutline, fill: inboxFill },
+      to: "/email",
     },
     {
       name: "star",
       title: "starred",
       images: { outline: starOutline, fill: starFill },
+      to: "/starred",
     },
     {
       name: "snooze",
@@ -45,31 +48,31 @@ export function EmailMainMenu() {
           name={item.name}
           title={item.title}
           images={item.images}
+          to={item.to}
         />
       ))}
     </section>
   );
 }
 
-function MainMenuItem({ name, title, images }) {
-  function handleChange(ev) {
-    console.log(ev.target.value);
-  }
-  return (
-    <div className="main-menu-item">
-      <input
-        id={name}
-        type="radio"
-        name="main-menu-filter"
-        value={name}
-        onChange={handleChange}
-      />
-      <label htmlFor={name}>
+function MainMenuItem({ name, title, to, images }) {
+  if (to) {
+    return (
+      <NavLink to={to} className="main-menu-item">
         <span>
-          <img src={images.outline} alt="" />
+          <img src={images.outline} alt={name} />
         </span>
         <span>{title}</span>
-      </label>
-    </div>
-  );
+      </NavLink>
+    );
+  } else {
+    return (
+      <a href="" className="main-menu-item">
+        <span>
+          <img src={images.outline} alt={name} />
+        </span>
+        <span>{title}</span>
+      </a>
+    );
+  }
 }

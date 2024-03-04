@@ -25,6 +25,7 @@ export function App() {
             <Route path="/email" element={<EmailIndex />}>
               <Route path="/email/:emailId" element={<EmailDetails />} />
             </Route>
+            <Route path="/starred" element={<EmailIndex />} />
           </Routes>
         </main>
         <AppFooter />

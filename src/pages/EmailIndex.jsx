@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Outlet, useParams } from "react-router";
+import { Outlet, useLocation, useParams } from "react-router";
 import { EmailList } from "../cmps/EmailList";
 import { emailService } from "../services/email.service";
 import { EmailHeader } from "../cmps/EmailHeader";
@@ -10,6 +10,8 @@ export function EmailIndex() {
   const [emails, setEmails] = useState(null);
   const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter());
   const params = useParams();
+  const location = useLocation();
+  const { hash, pathname, search } = location;
   const loggedinUser = {
     email: "user@appsus.com",
     fullname: "Mahatma Appsus",
@@ -17,8 +19,9 @@ export function EmailIndex() {
 
   // i load the data with useEfffect becuse if not i will get into a loop od rendering becuse the state keep changing
   useEffect(() => {
+    console.log("mount");
     loadEmails();
-  }, [filterBy]);
+  }, [filterBy, location]);
 
   function onSetFilter(fieldsToUpdate) {
     setFilterBy((prevFilter) => ({ ...prevFilter, ...fieldsToUpdate }));
@@ -26,8 +29,14 @@ export function EmailIndex() {
 
   async function loadEmails() {
     try {
-      const emails = await emailService.query(filterBy);
-      setEmails(emails);
+      if (pathname == "/starred") {
+        const emails = await emailService.query();
+        const starredEmail = emails.filter((email) => email.isStarred == true);
+        setEmails(starredEmail);
+      } else {
+        const emails = await emailService.query(filterBy);
+        setEmails(emails);
+      }
     } catch (error) {
       console.log("Error loding emails", error);
     }

@@ -2,10 +2,6 @@ section.main-menu {
     padding-right: 16px;
 }
 
-.main-menu-item input {
-    display: none;
-}
-
 .compose-mail {
     padding: 0 24px 0 20px;
     min-width: 96px;
@@ -27,7 +23,7 @@ section.main-menu {
     height: 24px;
 }
 
-.main-menu-item label {
+.main-menu-item {
     cursor: pointer;
     align-items: center;
     display: flex;
@@ -40,14 +36,18 @@ section.main-menu {
     text-transform: capitalize;
 }
 
-.main-menu-item label span {
+.main-menu-item:hover {
+    background-color: rgba(32, 33, 36, 0.059);
+}
+
+.main-menu-item span {
     display: inline-block;
     width: 20px;
     height: 20px;
     margin-right: 18px;
 }
 
-.main-menu-item input:checked+label {
+.main-menu-item.active {
     background-color: #d2e3fc;
     color: #001d35;
     font-weight: 700;
