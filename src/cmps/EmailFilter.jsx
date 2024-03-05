@@ -4,7 +4,6 @@ import { svg } from "../assets/svg.jsx";
 export function EmailFilter({ filterBy, onSetFilter }) {
   const [filterByToEdit, setFilterByToEdit] = useState(filterBy);
 
-  //Q - this is workink but i dont understand why
   useEffect(() => {
     onSetFilter(filterByToEdit);
   }, [filterByToEdit]);

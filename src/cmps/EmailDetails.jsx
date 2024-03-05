@@ -52,6 +52,8 @@ export function EmailDetails() {
   }
 
   if (!email) return <div>Loading..</div>;
+
+  //change navigate path to params.emailId becuse i can be on deffrent folders
   return (
     <section className="email-details">
       <div className="top-bar">
