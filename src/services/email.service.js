@@ -138,9 +138,10 @@ function filterEmails(emails, filterBy) {
   const { isRead, searchStr, folder } = filterBy;
   if (folder === "inbox") {
     if (isRead != null) {
-      filteredEmails = emails.filter((email) => email.isRead == isRead);
+      filteredEmails = filteredEmails.filter((email) => email.isRead == isRead);
+      console.log("isRead", filteredEmails);
     }
-    filteredEmails = emails.filter(
+    filteredEmails = filteredEmails.filter(
       (email) =>
         email.subject.toLowerCase().includes(searchStr.toLowerCase()) ||
         email.body.toLowerCase().includes(searchStr.toLowerCase()) ||

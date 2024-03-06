@@ -20,11 +20,6 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     });
   }
 
-  function onSubmitFilter(ev) {
-    ev.preventDefault();
-    onSetFilter(filterByToEdit);
-  }
-
   // Q - cr
   function convertToBoolean(value) {
     var boolianVal = value === "null" ? null : value === "true";
@@ -32,14 +27,14 @@ export function EmailFilter({ filterBy, onSetFilter }) {
   }
 
   return (
-    <form className="email-filter-form" onSubmit={onSubmitFilter}>
+    <form className="email-filter-form">
       <label htmlFor="search">
         <span className="icon-btn" data-tooltip="search">
           {svg.searchIcon}
         </span>
         <input
           id="search"
-          name="text"
+          name="searchStr"
           placeholder="Search mail"
           type="text"
           value={filterByToEdit.searchStr}

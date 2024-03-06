@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { utilService } from "../services/util.service";
 
 export function EmailPreview({ email }) {
+  const params = useParams();
+
   return (
-    <Link to={`/email/${email.id}`}>
+    <Link to={`/email/${params.folder}/${email.id}`}>
       <article className="email-preview flex align-center">
         <div className="email-from">
           {utilService.getStringBeforeChar(email.from, "@")}

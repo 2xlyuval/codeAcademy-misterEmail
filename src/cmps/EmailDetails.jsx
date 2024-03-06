@@ -6,6 +6,7 @@ import arrowBack from "../assets/imgs/arrow_back.png";
 
 export function EmailDetails() {
   const [email, setEmail] = useState(null);
+
   const params = useParams();
   const navigate = useNavigate();
   const { emails, onUpdateEmail, onRemoveEmail } = useOutletContext();
@@ -58,14 +59,18 @@ export function EmailDetails() {
     <section className="email-details">
       <div className="top-bar">
         <div className="email-actions flex align-center">
-          <Link to="/email" className="back-btn" data-tooltip="Back to inbox">
+          <Link
+            to={`/email/${params.folder}`}
+            className="back-btn"
+            data-tooltip="Back to inbox"
+          >
             <img src={arrowBack} alt="" />
           </Link>
           <div
             className="email-delete"
             onClick={() => {
               onRemoveEmail(email.id);
-              navigate("/email");
+              navigate(`/email/${params.folder}`);
             }}
             data-tooltip="delete"
           ></div>
@@ -73,7 +78,7 @@ export function EmailDetails() {
             className={`email-read ${email.isRead ? "checked" : ""}`}
             onClick={() => {
               updateEmailisRead(email, false);
-              navigate("/email");
+              navigate(`/email/${params.folder}`);
             }}
             data-tooltip="mark as unread"
           ></div>
