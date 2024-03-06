@@ -42,7 +42,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
           name="text"
           placeholder="Search mail"
           type="text"
-          value={filterByToEdit.text}
+          value={filterByToEdit.searchStr}
           onChange={handleChange}
         />
         <span className="icon-btn" data-tooltip="Show search options">

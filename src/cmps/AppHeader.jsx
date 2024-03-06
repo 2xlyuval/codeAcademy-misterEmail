@@ -21,7 +21,7 @@ export function AppHeader() {
               </ul>
             </li>
             <li>
-              <NavLink to="/email">Emails</NavLink>
+              <NavLink to="/email/inbox">Emails</NavLink>
             </li>
           </ul>
         </nav>

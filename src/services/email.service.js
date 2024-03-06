@@ -128,24 +128,35 @@ _createEmails();
 async function query(filterBy) {
   let emails = await storageService.query(STORAGE_KEY);
   if (filterBy) {
-    const { isRead, text } = filterBy;
-    if (isRead != null) {
-      emails = emails.filter((email) => email.isRead == isRead);
-    }
-    emails = emails.filter(
-      (email) =>
-        email.subject.toLowerCase().includes(text.toLowerCase()) ||
-        email.body.toLowerCase().includes(text.toLowerCase()) ||
-        email.from.toLowerCase().includes(text.toLowerCase())
-    );
+    emails = filterEmails(emails, filterBy);
   }
   return emails;
 }
 
+function filterEmails(emails, filterBy) {
+  let filteredEmails = emails;
+  const { isRead, searchStr, folder } = filterBy;
+  if (folder === "inbox") {
+    if (isRead != null) {
+      filteredEmails = emails.filter((email) => email.isRead == isRead);
+    }
+    filteredEmails = emails.filter(
+      (email) =>
+        email.subject.toLowerCase().includes(searchStr.toLowerCase()) ||
+        email.body.toLowerCase().includes(searchStr.toLowerCase()) ||
+        email.from.toLowerCase().includes(searchStr.toLowerCase())
+    );
+  } else {
+    filteredEmails = emails.filter((email) => email[folder] == true);
+  }
+  return filteredEmails;
+}
+
 function getDefaultFilter() {
   return {
-    text: "",
+    searchStr: "",
     isRead: null,
+    folder: "inbox",
   };
 }
 
@@ -161,7 +172,6 @@ function save(emailToSave) {
   if (emailToSave.id) {
     return storageService.put(STORAGE_KEY, emailToSave);
   } else {
-    emailToSave.isOn = false;
     return storageService.post(STORAGE_KEY, emailToSave);
   }
 }

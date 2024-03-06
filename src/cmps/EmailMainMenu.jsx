@@ -15,23 +15,25 @@ export function EmailMainMenu() {
       name: "inbox",
       title: "inbox",
       images: { outline: inboxOutline, fill: inboxFill },
-      to: "/email",
+      to: "/inbox",
     },
     {
-      name: "star",
+      name: "isStarred",
       title: "starred",
       images: { outline: starOutline, fill: starFill },
-      to: "/starred",
+      to: "/isStarred",
     },
     {
       name: "snooze",
       title: "snoozed",
       images: { outline: snoozeOutline, fill: snoozeFill },
+      to: "/snoozed",
     },
     {
       name: "sent",
       title: "sent",
       images: { outline: sentOutline, fill: sentFill },
+      to: "sent",
     },
   ];
   return (
@@ -56,23 +58,12 @@ export function EmailMainMenu() {
 }
 
 function MainMenuItem({ name, title, to, images }) {
-  if (to) {
-    return (
-      <NavLink to={to} className="main-menu-item">
-        <span>
-          <img src={images.outline} alt={name} />
-        </span>
-        <span>{title}</span>
-      </NavLink>
-    );
-  } else {
-    return (
-      <a href="" className="main-menu-item">
-        <span>
-          <img src={images.outline} alt={name} />
-        </span>
-        <span>{title}</span>
-      </a>
-    );
-  }
+  return (
+    <NavLink to={`/email${to}`} className="main-menu-item">
+      <span>
+        <img src={images.outline} alt={name} />
+      </span>
+      <span>{title}</span>
+    </NavLink>
+  );
 }

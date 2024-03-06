@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Outlet, useLocation, useParams } from "react-router";
+import { Outlet, useParams } from "react-router";
 import { EmailList } from "../cmps/EmailList";
 import { emailService } from "../services/email.service";
 import { EmailHeader } from "../cmps/EmailHeader";
@@ -9,9 +9,9 @@ export function EmailIndex() {
   //I use null and not [] beacuse until the i get the data the com will try to render an empty array and it will throw error
   const [emails, setEmails] = useState(null);
   const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter());
+
   const params = useParams();
-  const location = useLocation();
-  const { hash, pathname, search } = location;
+
   const loggedinUser = {
     email: "user@appsus.com",
     fullname: "Mahatma Appsus",
@@ -19,9 +19,12 @@ export function EmailIndex() {
 
   // i load the data with useEfffect becuse if not i will get into a loop od rendering becuse the state keep changing
   useEffect(() => {
-    console.log("mount");
     loadEmails();
-  }, [filterBy, location]);
+  }, [filterBy]);
+
+  useEffect(() => {
+    setFilterBy(emailService.getDefaultFilter());
+  }, [params.folder]);
 
   function onSetFilter(fieldsToUpdate) {
     setFilterBy((prevFilter) => ({ ...prevFilter, ...fieldsToUpdate }));
@@ -29,14 +32,11 @@ export function EmailIndex() {
 
   async function loadEmails() {
     try {
-      if (pathname == "/starred") {
-        const emails = await emailService.query();
-        const starredEmail = emails.filter((email) => email.isStarred == true);
-        setEmails(starredEmail);
-      } else {
-        const emails = await emailService.query(filterBy);
-        setEmails(emails);
-      }
+      const emails = await emailService.query({
+        ...filterBy,
+        folder: params.folder,
+      });
+      setEmails(emails);
     } catch (error) {
       console.log("Error loding emails", error);
     }
