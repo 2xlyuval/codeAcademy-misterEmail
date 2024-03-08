@@ -18,21 +18,15 @@ export function EmailIndex() {
     emailService.getFilterFromParams(searchParams)
   );
 
-  const loggedinUser = {
-    email: "user@appsus.com",
-    fullname: "Mahatma Appsus",
-  };
+  useEffect(() => {
+    setFilterBy((prevFilter) => ({ ...prevFilter, folder: params.folder }));
+  }, [params.folder]);
 
   // i load the data with useEfffect becuse if not i will get into a loop od rendering becuse the state keep changing
   useEffect(() => {
     setSearchParams(filterBy);
     loadEmails();
   }, [filterBy]);
-
-  // useEffect(() => {
-  //   console.log("params folder");
-  //   setFilterBy(emailService.getDefaultFilter());
-  // }, [params.folder]);
 
   function onSetFilter(fieldsToUpdate) {
     setFilterBy((prevFilter) => ({ ...prevFilter, ...fieldsToUpdate }));
@@ -86,7 +80,7 @@ export function EmailIndex() {
         onSetFilter={onSetFilter}
       />
       <main className="email-main">
-        <EmailMainMenu />
+        <EmailMainMenu params={params} />
         {params.emailId ? (
           <Outlet context={{ emails, onUpdateEmail, onRemoveEmail }} />
         ) : (

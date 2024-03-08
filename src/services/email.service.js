@@ -11,6 +11,10 @@ export const emailService = {
 };
 
 const STORAGE_KEY = "emails";
+const loggedinUser = {
+  userEmail: "user@appsus.com",
+  fullname: "Mahatma Appsus",
+};
 const emailsDummyData = [
   {
     id: "e101",
@@ -21,7 +25,7 @@ const emailsDummyData = [
     sentAt: 1646062191000, // Example timestamp, you can put any valid timestamp here
     removedAt: null, // for later use
     from: "momo@momo.com",
-    to: "user@appsus.com",
+    to: "notuser@appsus.com",
   },
   {
     id: "e102",
@@ -98,7 +102,7 @@ const emailsDummyData = [
     sentAt: 1645548191000, // Example timestamp, you can put any valid timestamp here
     removedAt: null,
     from: "marketing@company.com",
-    to: "user@appsus.com",
+    to: "notMyUser@appsus.com",
   },
   {
     id: "e109",
@@ -109,7 +113,7 @@ const emailsDummyData = [
     sentAt: 1645476191000, // Example timestamp, you can put any valid timestamp here
     removedAt: null,
     from: "feedback@company.com",
-    to: "user@appsus.com",
+    to: "notMyUser@appsus.com",
   },
   {
     id: "e110",
@@ -120,7 +124,7 @@ const emailsDummyData = [
     sentAt: 1645404191000, // Example timestamp, you can put any valid timestamp here
     removedAt: null,
     from: "birthday@friends.com",
-    to: "user@appsus.com",
+    to: "notMyUser@appsus.com",
   },
 ];
 
@@ -138,20 +142,51 @@ function filterEmails(emails, filterBy) {
   let filteredEmails = emails;
   const { hasStr, from, subject, isRead: isReadStr, date, folder } = filterBy;
   const isRead = _convertToBoolean(isReadStr);
-  if (folder === "inbox") {
-    if (isRead != null) {
-      filteredEmails = filteredEmails.filter((email) => email.isRead == isRead);
-    }
-    filteredEmails = filteredEmails.filter(
-      (email) =>
-        email.subject.toLowerCase().includes(hasStr.toLowerCase()) ||
-        email.body.toLowerCase().includes(hasStr.toLowerCase()) ||
-        email.from.toLowerCase().includes(hasStr.toLowerCase())
-    );
-  } else {
-    filteredEmails = emails.filter((email) => email[folder] == true);
+  switch (folder) {
+    case "inbox":
+      filteredEmails = filteredEmails.filter(
+        (email) => email.to == loggedinUser.userEmail
+      );
+      filteredEmails = filterByHasStr(filteredEmails, hasStr);
+      break;
+    case "starred":
+      filteredEmails = filteredEmails.filter(
+        (email) => email.isStarred == true
+      );
+      filteredEmails = filterByHasStr(filteredEmails, hasStr);
+      break;
+    case "sent":
+      filteredEmails = filteredEmails.filter(
+        (email) => email.to != loggedinUser.userEmail
+      );
+      filteredEmails = filterByHasStr(filteredEmails, hasStr);
+      break;
   }
   return filteredEmails;
+
+  // if (folder === "inbox") {
+  //   if (isRead != null) {
+  //     filteredEmails = filteredEmails.filter((email) => email.isRead == isRead);
+  //   }
+  //   filteredEmails = filteredEmails.filter(
+  //     (email) =>
+  //       email.subject.toLowerCase().includes(hasStr.toLowerCase()) ||
+  //       email.body.toLowerCase().includes(hasStr.toLowerCase()) ||
+  //       email.from.toLowerCase().includes(hasStr.toLowerCase())
+  //   );
+  // } else {
+  //   filteredEmails = emails.filter((email) => email[folder] == true);
+  // }
+  // return filteredEmails;
+}
+
+function filterByHasStr(email, hasStr) {
+  return email.filter(
+    (email) =>
+      email.subject.toLowerCase().includes(hasStr.toLowerCase()) ||
+      email.body.toLowerCase().includes(hasStr.toLowerCase()) ||
+      email.from.toLowerCase().includes(hasStr.toLowerCase())
+  );
 }
 
 function getDefaultFilter() {

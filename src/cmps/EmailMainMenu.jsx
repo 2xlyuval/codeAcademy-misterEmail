@@ -2,14 +2,14 @@ import inboxOutline from "../assets/imgs/inbox-outline.png";
 import inboxFill from "../assets/imgs/inbox-fill.png";
 import starOutline from "../assets/imgs/star-outline.png";
 import starFill from "../assets/imgs/star-fill.png";
-import snoozeOutline from "../assets/imgs/snooze-outline.png";
-import snoozeFill from "../assets/imgs/snooze-fill.png";
+import trashOutline from "../assets/imgs/delete-outline.png";
+import trashFill from "../assets/imgs/delete-fill.png";
 import sentOutline from "../assets/imgs/sent-outline.png";
 import sentFill from "../assets/imgs/sent-fill.png";
 import compose from "../assets/imgs/compose.png";
 import { NavLink } from "react-router-dom";
 
-export function EmailMainMenu() {
+export function EmailMainMenu({ params }) {
   const menuItems = [
     {
       name: "inbox",
@@ -18,16 +18,16 @@ export function EmailMainMenu() {
       to: "/inbox",
     },
     {
-      name: "isStarred",
+      name: "starred",
       title: "starred",
       images: { outline: starOutline, fill: starFill },
-      to: "/isStarred",
+      to: "/starred",
     },
     {
-      name: "snooze",
-      title: "snoozed",
-      images: { outline: snoozeOutline, fill: snoozeFill },
-      to: "/snoozed",
+      name: "trash",
+      title: "trash",
+      images: { outline: trashOutline, fill: trashFill },
+      to: "/trash",
     },
     {
       name: "sent",
@@ -51,17 +51,21 @@ export function EmailMainMenu() {
           title={item.title}
           images={item.images}
           to={item.to}
+          params={params}
         />
       ))}
     </section>
   );
 }
 
-function MainMenuItem({ name, title, to, images }) {
+function MainMenuItem({ name, title, to, images, params }) {
   return (
     <NavLink to={`/email${to}`} className="main-menu-item">
       <span>
-        <img src={images.outline} alt={name} />
+        <img
+          src={params.folder == name ? images.fill : images.outline}
+          alt={name}
+        />
       </span>
       <span>{title}</span>
     </NavLink>
