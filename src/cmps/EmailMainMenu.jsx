@@ -9,7 +9,7 @@ import sentFill from "../assets/imgs/sent-fill.png";
 import draftOutline from "../assets/imgs/draft-outline.png";
 import draftFill from "../assets/imgs/draft-fill.png";
 import compose from "../assets/imgs/compose.png";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export function EmailMainMenu({ params }) {
   const menuItems = [
@@ -46,12 +46,12 @@ export function EmailMainMenu({ params }) {
   ];
   return (
     <section className="main-menu">
-      <div className="compose-mail">
+      <Link to={"?compose=new"} className="compose-mail">
         <span>
           <img src={compose} alt="" />
         </span>{" "}
         compose
-      </div>
+      </Link>
       {menuItems.map((item, idx) => (
         <MainMenuItem
           key={idx}

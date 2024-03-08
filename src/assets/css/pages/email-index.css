@@ -6,6 +6,7 @@
 .email-index {
     flex: 1;
     background-color: var(--container-bg);
+    position: relative;
 }
 
 main .email-main {

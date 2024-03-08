@@ -7,6 +7,7 @@ import { emailService } from "../services/email.service";
 import { EmailHeader } from "../cmps/EmailHeader";
 import { EmailList } from "../cmps/EmailList";
 import { EmailMainMenu } from "../cmps/EmailMainMenu";
+import { EmailCompose } from "../cmps/EmailCompose";
 
 export function EmailIndex() {
   const params = useParams();
@@ -84,12 +85,16 @@ export function EmailIndex() {
         {params.emailId ? (
           <Outlet context={{ emails, onUpdateEmail, onDeleteEmail }} />
         ) : (
-          <EmailList
-            emails={emails}
-            onUpdateEmail={onUpdateEmail}
-            onDeleteEmail={onDeleteEmail}
-          />
+          <>
+            <EmailList
+              emails={emails}
+              onUpdateEmail={onUpdateEmail}
+              onDeleteEmail={onDeleteEmail}
+            />
+            {searchParams.get("compose") && <EmailCompose params={params} />}
+          </>
         )}
+
         <section className="side-panel"></section>
       </main>
     </section>

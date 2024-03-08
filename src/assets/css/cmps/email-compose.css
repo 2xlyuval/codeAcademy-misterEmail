@@ -1,0 +1,89 @@
+.email-compose {
+    position: absolute;
+    z-index: 11111;
+    bottom: 0;
+    right: 100px;
+    background-color: white;
+    box-shadow: 0px 8px 10px 1px rgba(0, 0, 0, .14), 0px 3px 14px 2px rgba(0, 0, 0, .12), 0px 5px 5px -3px rgba(0, 0, 0, .2);
+    border-radius: 8px 8px 0 0;
+}
+
+.email-compose .compose-header {
+    background-color: var(--container-bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px 8px 0 0;
+}
+
+.email-compose .compose-header .title {
+    font-weight: 600;
+}
+
+.email-compose .actions {
+    display: flex;
+    gap: 4px;
+}
+
+.email-compose .icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-size: contain;
+    cursor: pointer;
+}
+
+.email-compose .icon:hover {
+    background-color: rgb(68, 71, 70, 0.078);
+}
+
+.email-compose .icon.minimize {
+    background-image: url(../../imgs/ic_minimize.png);
+}
+
+.email-compose .icon.openClose-fullScren {
+    background-image: url(../../imgs/ic_fullScreen.png);
+}
+
+.email-compose .icon.close {
+    background-image: url(../../imgs/ic_close.png);
+}
+
+.email-compose form {
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
+}
+
+.email-compose form input {
+    border: none;
+    width: 100%;
+    box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.122);
+    line-height: 20px;
+    min-height: auto;
+    padding: 10px 0;
+}
+
+.email-compose form input::placeholder {
+    text-transform: capitalize;
+}
+
+.email-compose form input:focus-visible {
+    outline: none;
+}
+
+.email-compose form textarea {
+    border: none;
+    line-height: 20px;
+    min-height: auto;
+    padding: 10px 0;
+}
+
+.email-compose form textarea:focus-visible {
+    outline: none;
+}
+
+.email-compose form textarea::-webkit-resizer {
+    display: none;
+}
