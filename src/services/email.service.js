@@ -8,6 +8,7 @@ export const emailService = {
   getById,
   getDefaultFilter,
   getFilterFromParams,
+  getDefaultEmail,
 };
 
 const STORAGE_KEY = "emails";
@@ -215,12 +216,16 @@ function save(emailToSave) {
   }
 }
 
-//TODO: change to create email
-function createRobot(model = "", type = "", batteryStatus = 100) {
+function getDefaultEmail() {
   return {
-    model,
-    batteryStatus,
-    type,
+    body: "",
+    to: "",
+    subject: "",
+    from: loggedinUser.userEmail,
+    sentAt: Date.now(),
+    isStarred: false,
+    isRead: false,
+    removedAt: null,
   };
 }
 

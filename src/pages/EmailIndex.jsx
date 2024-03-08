@@ -71,6 +71,15 @@ export function EmailIndex() {
     }
   }
 
+  function onAddEmail(email) {
+    try {
+      emailService.save(email);
+      setEmails((prevEmails) => [...prevEmails, email]);
+    } catch (error) {
+      console.log("had issue add email", error);
+    }
+  }
+
   //wating for the data come back from storage
   if (!emails) return <div>Loading...</div>;
   const { hasStr, from, subject, isRead, date, folder } = filterBy;
@@ -91,7 +100,9 @@ export function EmailIndex() {
               onUpdateEmail={onUpdateEmail}
               onDeleteEmail={onDeleteEmail}
             />
-            {searchParams.get("compose") && <EmailCompose params={params} />}
+            {searchParams.get("compose") && (
+              <EmailCompose params={params} onAddEmail={onAddEmail} />
+            )}
           </>
         )}
 

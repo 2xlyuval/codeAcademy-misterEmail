@@ -1,6 +1,35 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { emailService } from "../services/email.service";
 
-export function EmailCompose({ params }) {
+export function EmailCompose({ params, onAddEmail }) {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState(emailService.getDefaultEmail());
+
+  function handleChange(ev) {
+    let { name: field, value, type } = ev.target;
+
+    console.log(ev);
+
+    setEmail((prevEmail) => {
+      return {
+        ...prevEmail,
+        [field]: value,
+      };
+    });
+  }
+
+  async function onSaveEmail(ev) {
+    ev.preventDefault();
+    try {
+      await onAddEmail(email);
+      navigate(`/email/${params.folder}`);
+    } catch (error) {
+      console.log("had issue save email", error);
+    }
+  }
+
   return (
     <div className="email-compose">
       <div className="compose-header">
@@ -13,14 +42,35 @@ export function EmailCompose({ params }) {
           </Link>
         </div>
       </div>
-      <form>
+      <form onSubmit={onSaveEmail}>
         <label htmlFor="to">
-          <input type="text" id="to" placeholder="to" />
+          <input
+            type="email"
+            id="to"
+            placeholder="to"
+            name="to"
+            value={email.to}
+            onChange={handleChange}
+          />
         </label>
         <label htmlFor="subject">
-          <input type="text" id="subject" placeholder="subject" />
+          <input
+            type="text"
+            id="subject"
+            placeholder="subject"
+            name="subject"
+            value={email.subject}
+            onChange={handleChange}
+          />
         </label>
-        <textarea name="" id="" cols="30" rows="10"></textarea>
+        <textarea
+          name="body"
+          id=""
+          cols="30"
+          rows="10"
+          value={email.body}
+          onChange={handleChange}
+        ></textarea>
         <button>send</button>
       </form>
     </div>
