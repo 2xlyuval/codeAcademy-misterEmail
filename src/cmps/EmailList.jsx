@@ -1,6 +1,9 @@
+import { useParams } from "react-router";
 import { EmailPreview } from "./EmailPreview";
 
-export function EmailList({ emails, onRemoveEmail, onUpdateEmail }) {
+export function EmailList({ emails, onUpdateEmail, onDeleteEmail }) {
+  const params = useParams();
+
   //TODO - maybe create one function called - toggleState
   function toggleStar(email) {
     const updatedEmail = { ...email, isStarred: !email.isStarred };
@@ -9,6 +12,19 @@ export function EmailList({ emails, onRemoveEmail, onUpdateEmail }) {
 
   function toggleRead(email) {
     const updatedEmail = { ...email, isRead: !email.isRead };
+    onUpdateEmail(updatedEmail);
+  }
+
+  function onRemoveEmail(email) {
+    if (params.folder == "trash") {
+      onDeleteEmail(email.id);
+    } else {
+      moveEmailToTrash(email);
+    }
+  }
+
+  function moveEmailToTrash(email) {
+    const updatedEmail = { ...email, removedAt: Date.now() };
     onUpdateEmail(updatedEmail);
   }
 
@@ -38,7 +54,7 @@ export function EmailList({ emails, onRemoveEmail, onUpdateEmail }) {
                 <div className="email-archive" data-tooltip="archive"></div>
                 <div
                   className="email-delete"
-                  onClick={() => onRemoveEmail(email.id)}
+                  onClick={() => onRemoveEmail(email)}
                   data-tooltip="delete"
                 ></div>
                 <div

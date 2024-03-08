@@ -44,7 +44,7 @@ export function EmailIndex() {
     }
   }
 
-  async function onRemoveEmail(emailId) {
+  async function onDeleteEmail(emailId) {
     try {
       await emailService.remove(emailId);
       //update emails state to save api calls
@@ -82,12 +82,12 @@ export function EmailIndex() {
       <main className="email-main">
         <EmailMainMenu params={params} />
         {params.emailId ? (
-          <Outlet context={{ emails, onUpdateEmail, onRemoveEmail }} />
+          <Outlet context={{ emails, onUpdateEmail, onDeleteEmail }} />
         ) : (
           <EmailList
             emails={emails}
-            onRemoveEmail={onRemoveEmail}
             onUpdateEmail={onUpdateEmail}
+            onDeleteEmail={onDeleteEmail}
           />
         )}
         <section className="side-panel"></section>

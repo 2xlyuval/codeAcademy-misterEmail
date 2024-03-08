@@ -142,6 +142,7 @@ function filterEmails(emails, filterBy) {
   let filteredEmails = emails;
   const { hasStr, from, subject, isRead: isReadStr, date, folder } = filterBy;
   const isRead = _convertToBoolean(isReadStr);
+  filteredEmails = filteredEmails.filter((email) => email.removedAt == null);
   switch (folder) {
     case "inbox":
       filteredEmails = filteredEmails.filter(
@@ -161,23 +162,12 @@ function filterEmails(emails, filterBy) {
       );
       filteredEmails = filterByHasStr(filteredEmails, hasStr);
       break;
+    case "trash":
+      filteredEmails = emails.filter((email) => email.removedAt);
+      filteredEmails = filterByHasStr(filteredEmails, hasStr);
+      break;
   }
   return filteredEmails;
-
-  // if (folder === "inbox") {
-  //   if (isRead != null) {
-  //     filteredEmails = filteredEmails.filter((email) => email.isRead == isRead);
-  //   }
-  //   filteredEmails = filteredEmails.filter(
-  //     (email) =>
-  //       email.subject.toLowerCase().includes(hasStr.toLowerCase()) ||
-  //       email.body.toLowerCase().includes(hasStr.toLowerCase()) ||
-  //       email.from.toLowerCase().includes(hasStr.toLowerCase())
-  //   );
-  // } else {
-  //   filteredEmails = emails.filter((email) => email[folder] == true);
-  // }
-  // return filteredEmails;
 }
 
 function filterByHasStr(email, hasStr) {
