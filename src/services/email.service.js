@@ -7,6 +7,7 @@ export const emailService = {
   remove,
   getById,
   getDefaultFilter,
+  getFilterFromParams,
 };
 
 const STORAGE_KEY = "emails";
@@ -135,7 +136,8 @@ async function query(filterBy) {
 
 function filterEmails(emails, filterBy) {
   let filteredEmails = emails;
-  const { hasStr, from, subject, isRead, date, folder } = filterBy;
+  const { hasStr, from, subject, isRead: isReadStr, date, folder } = filterBy;
+  const isRead = _convertToBoolean(isReadStr);
   if (folder === "inbox") {
     if (isRead != null) {
       filteredEmails = filteredEmails.filter((email) => email.isRead == isRead);
@@ -161,6 +163,15 @@ function getDefaultFilter() {
     date: "",
     folder: "inbox",
   };
+}
+
+function getFilterFromParams(searchParams) {
+  const defaultFilter = getDefaultFilter();
+  const filetrBy = {};
+  for (const field in defaultFilter) {
+    filetrBy[field] = searchParams.get(field) || defaultFilter[field];
+  }
+  return filetrBy;
 }
 
 function getById(id) {
@@ -207,4 +218,9 @@ function _createEmails() {
     }
     utilService.saveToStorage(STORAGE_KEY, emails);
   }
+}
+
+function _convertToBoolean(value) {
+  var boolianVal = value === "null" ? null : value === "true";
+  return boolianVal;
 }

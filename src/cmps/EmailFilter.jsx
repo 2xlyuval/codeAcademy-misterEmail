@@ -13,7 +13,6 @@ export function EmailFilter({ filterBy, onSetFilter }) {
   function handleChange(ev) {
     let { name: field, value, type } = ev.target;
 
-    value = type === "select-one" ? convertToBoolean(value) : value;
     setFilterByToEdit((prevFilter) => {
       return {
         ...prevFilter,
@@ -32,11 +31,6 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     setFilterByToEdit(emailService.getDefaultFilter());
     onSetFilter(emailService.getDefaultFilter());
     setDisplayForm(false);
-  }
-
-  function convertToBoolean(value) {
-    var boolianVal = value === "null" ? null : value === "true";
-    return boolianVal;
   }
 
   return (
