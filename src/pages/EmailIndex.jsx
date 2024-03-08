@@ -24,7 +24,6 @@ export function EmailIndex() {
 
   useEffect(() => {
     setFilterBy(emailService.getDefaultFilter());
-    console.log("folder");
   }, [params.folder]);
 
   function onSetFilter(fieldsToUpdate) {
@@ -71,10 +70,13 @@ export function EmailIndex() {
 
   //wating for the data come back from storage
   if (!emails) return <div>Loading...</div>;
-
+  const { hasStr, from, subject, isRead, date, folder } = filterBy;
   return (
     <section className="email-index">
-      <EmailHeader filterBy={filterBy} onSetFilter={onSetFilter} />
+      <EmailHeader
+        filterBy={{ hasStr, from, subject, isRead, date }}
+        onSetFilter={onSetFilter}
+      />
       <main className="email-main">
         <EmailMainMenu />
         {params.emailId ? (

@@ -33,7 +33,7 @@ export function EmailMainMenu() {
       name: "sent",
       title: "sent",
       images: { outline: sentOutline, fill: sentFill },
-      to: "sent",
+      to: "/sent",
     },
   ];
   return (

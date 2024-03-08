@@ -135,17 +135,16 @@ async function query(filterBy) {
 
 function filterEmails(emails, filterBy) {
   let filteredEmails = emails;
-  const { isRead, searchStr, folder } = filterBy;
+  const { hasStr, from, subject, isRead, date, folder } = filterBy;
   if (folder === "inbox") {
     if (isRead != null) {
       filteredEmails = filteredEmails.filter((email) => email.isRead == isRead);
-      console.log("isRead", filteredEmails);
     }
     filteredEmails = filteredEmails.filter(
       (email) =>
-        email.subject.toLowerCase().includes(searchStr.toLowerCase()) ||
-        email.body.toLowerCase().includes(searchStr.toLowerCase()) ||
-        email.from.toLowerCase().includes(searchStr.toLowerCase())
+        email.subject.toLowerCase().includes(hasStr.toLowerCase()) ||
+        email.body.toLowerCase().includes(hasStr.toLowerCase()) ||
+        email.from.toLowerCase().includes(hasStr.toLowerCase())
     );
   } else {
     filteredEmails = emails.filter((email) => email[folder] == true);
@@ -155,8 +154,11 @@ function filterEmails(emails, filterBy) {
 
 function getDefaultFilter() {
   return {
-    searchStr: "",
+    hasStr: "",
+    from: "",
+    subject: "",
     isRead: null,
+    date: "",
     folder: "inbox",
   };
 }
