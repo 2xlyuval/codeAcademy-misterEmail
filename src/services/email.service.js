@@ -126,6 +126,7 @@ const emailsDummyData = [
     removedAt: null,
     from: "birthday@friends.com",
     to: "notMyUser@appsus.com",
+    isDraft: true,
   },
 ];
 

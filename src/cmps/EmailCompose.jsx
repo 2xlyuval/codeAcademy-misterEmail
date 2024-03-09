@@ -1,13 +1,29 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { emailService } from "../services/email.service";
 
-export function EmailCompose({ params, onAddEmail }) {
+export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const emailId =
+    searchParams.get("compose") != "new" ? searchParams.get("compose") : null;
 
   const [email, setEmail] = useState(emailService.getDefaultEmail());
   //minimized, normal, fullscreen
   const [viewState, setViewState] = useState("normal");
+
+  useEffect(() => {
+    if (emailId) loadEmail();
+  }, []);
+
+  async function loadEmail() {
+    try {
+      const email = await emailService.getById(emailId);
+      setEmail(email);
+    } catch (error) {
+      console.log("has issues getting email by id", error);
+    }
+  }
 
   function handleChange(ev) {
     let { name: field, value, type } = ev.target;
@@ -19,15 +35,18 @@ export function EmailCompose({ params, onAddEmail }) {
       };
     });
 
-    setTimeout(() => {
-      onAddEmail(email);
-    }, 5000);
+    //TODO - need to add once as draft
+    // setTimeout(() => {
+    //   onAddEmail(email);
+    // }, 5000);
   }
 
+  //TODO - need to sync between draft / saved /sent
   async function onSaveEmail(ev) {
     ev.preventDefault();
     try {
-      await onAddEmail({ ...email, isDraft: false });
+      if (email.id) await onUpdateEmail(email);
+      else await onAddEmail({ ...email, isDraft: false });
       navigate(`/email/${params.folder}`);
     } catch (error) {
       console.log("had issue save email", error);

@@ -120,14 +120,14 @@ export function EmailIndex() {
       setEmails((prevEmails) => [...prevEmails, savedEmail]);
       eventBusService.emmit("show-use-msg", {
         type: "success",
-        txt: "email are saved!",
+        txt: "email are sent!",
         show: true,
       });
     } catch (error) {
       console.log("had issue add email", error);
       eventBusService.emmit("show-use-msg", {
         type: "error",
-        txt: "email not saved :(",
+        txt: "email not sent :(",
         show: true,
       });
     }
@@ -154,7 +154,11 @@ export function EmailIndex() {
               onDeleteEmail={onDeleteEmail}
             />
             {searchParams.get("compose") && (
-              <EmailCompose params={params} onAddEmail={onAddEmail} />
+              <EmailCompose
+                params={params}
+                onAddEmail={onAddEmail}
+                onUpdateEmail={onUpdateEmail}
+              />
             )}
           </>
         )}
