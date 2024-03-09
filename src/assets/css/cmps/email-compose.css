@@ -1,8 +1,11 @@
-.email-compose {
+.email-compose-wrapper {
     position: absolute;
     z-index: 11111;
     bottom: 0;
     right: 100px;
+}
+
+.email-compose {
     background-color: white;
     box-shadow: 0px 8px 10px 1px rgba(0, 0, 0, .14), 0px 3px 14px 2px rgba(0, 0, 0, .12), 0px 5px 5px -3px rgba(0, 0, 0, .2);
     border-radius: 8px 8px 0 0;
@@ -86,4 +89,34 @@
 
 .email-compose form textarea::-webkit-resizer {
     display: none;
+}
+
+/* minimized */
+
+.email-compose-wrapper.minimized .email-compose form {
+    height: 0;
+    overflow: hidden;
+}
+
+/* fullscreen */
+
+.email-compose-wrapper.fullscreen {
+    background-color: rgba(0, 0, 0, .5);
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.email-compose-wrapper.fullscreen .email-compose {
+    width: 80%;
+    height: 90%;
+}
+
+.email-compose-wrapper.fullscreen .email-compose .icon.openClose-fullScren {
+    background-image: url(../../imgs/ic_close-fullscreen.png);
 }
