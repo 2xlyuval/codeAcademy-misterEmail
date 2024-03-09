@@ -21,7 +21,7 @@ const emailsDummyData = [
     id: "e101",
     subject: "Miss you!",
     body: "Would love to catch up sometimes",
-    isRead: false,
+    isRead: true,
     isStarred: true,
     sentAt: 1646062191000, // Example timestamp, you can put any valid timestamp here
     removedAt: null, // for later use
@@ -109,7 +109,7 @@ const emailsDummyData = [
     id: "e109",
     subject: "Feedback Request",
     body: "We'd appreciate your feedback on our services.",
-    isRead: false,
+    isRead: true,
     isStarred: false,
     sentAt: 1645476191000, // Example timestamp, you can put any valid timestamp here
     removedAt: null,
@@ -224,7 +224,7 @@ function getDefaultEmail() {
     from: loggedinUser.userEmail,
     sentAt: Date.now(),
     isStarred: false,
-    isRead: false,
+    isRead: true,
     removedAt: null,
   };
 }

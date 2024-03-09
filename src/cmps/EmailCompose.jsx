@@ -12,8 +12,6 @@ export function EmailCompose({ params, onAddEmail }) {
   function handleChange(ev) {
     let { name: field, value, type } = ev.target;
 
-    console.log(ev);
-
     setEmail((prevEmail) => {
       return {
         ...prevEmail,

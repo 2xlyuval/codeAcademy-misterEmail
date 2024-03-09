@@ -13,21 +13,36 @@ export function EmailIndex() {
   const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  //I use null and not [] beacuse until the i get the data the com will try to render an empty array and it will throw error
   const [emails, setEmails] = useState(null);
   const [filterBy, setFilterBy] = useState(
     emailService.getFilterFromParams(searchParams)
   );
+  const [unreadCount, setUnreadCount] = useState(null);
+
+  useEffect(() => {
+    countUnreadEmails();
+  }, []);
 
   useEffect(() => {
     setFilterBy((prevFilter) => ({ ...prevFilter, folder: params.folder }));
   }, [params.folder]);
 
-  // i load the data with useEfffect becuse if not i will get into a loop od rendering becuse the state keep changing
   useEffect(() => {
     setSearchParams(filterBy);
     loadEmails();
   }, [filterBy]);
+
+  async function countUnreadEmails() {
+    try {
+      const unradEmails = await emailService.query({
+        ...emailService.getDefaultFilter(),
+        isRead: false,
+      });
+      setUnreadCount(unradEmails.length);
+    } catch (error) {
+      console.log("Error loding emails", error);
+    }
+  }
 
   function onSetFilter(fieldsToUpdate) {
     setFilterBy((prevFilter) => ({ ...prevFilter, ...fieldsToUpdate }));
@@ -90,7 +105,7 @@ export function EmailIndex() {
         onSetFilter={onSetFilter}
       />
       <main className="email-main">
-        <EmailMainMenu params={params} />
+        <EmailMainMenu params={params} unreadCount={unreadCount} />
         {params.emailId ? (
           <Outlet context={{ emails, onUpdateEmail, onDeleteEmail }} />
         ) : (

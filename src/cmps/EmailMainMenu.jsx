@@ -11,7 +11,7 @@ import draftFill from "../assets/imgs/draft-fill.png";
 import compose from "../assets/imgs/compose.png";
 import { Link, NavLink } from "react-router-dom";
 
-export function EmailMainMenu({ params }) {
+export function EmailMainMenu({ params, unreadCount }) {
   const menuItems = [
     {
       name: "inbox",
@@ -60,13 +60,14 @@ export function EmailMainMenu({ params }) {
           images={item.images}
           to={item.to}
           params={params}
+          unreadCount={unreadCount}
         />
       ))}
     </section>
   );
 }
 
-function MainMenuItem({ name, title, to, images, params }) {
+function MainMenuItem({ name, title, to, images, params, unreadCount }) {
   return (
     <NavLink to={`/email${to}`} className="main-menu-item">
       <span>
@@ -76,6 +77,9 @@ function MainMenuItem({ name, title, to, images, params }) {
         />
       </span>
       <span>{title}</span>
+      {name == "inbox" && (
+        <span style={{ marginLeft: "auto" }}>{unreadCount}</span>
+      )}
     </NavLink>
   );
 }
