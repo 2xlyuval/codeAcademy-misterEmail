@@ -26,6 +26,7 @@ export function EmailIndex() {
 
   useEffect(() => {
     setFilterBy((prevFilter) => ({ ...prevFilter, folder: params.folder }));
+    document.title = params.folder;
   }, [params.folder]);
 
   useEffect(() => {
@@ -113,10 +114,10 @@ export function EmailIndex() {
     }
   }
 
-  function onAddEmail(email) {
+  async function onAddEmail(email) {
     try {
-      emailService.save(email);
-      setEmails((prevEmails) => [...prevEmails, email]);
+      const savedEmail = await emailService.save(email);
+      setEmails((prevEmails) => [...prevEmails, savedEmail]);
       eventBusService.emmit("show-use-msg", {
         type: "success",
         txt: "email are saved!",
