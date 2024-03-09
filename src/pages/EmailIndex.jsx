@@ -58,6 +58,11 @@ export function EmailIndex() {
       setEmails(emails);
     } catch (error) {
       console.log("Error loding emails", error);
+      eventBusService.emmit("show-use-msg", {
+        type: "error",
+        txt: "failed to load emails",
+        show: true,
+      });
     }
   }
 
@@ -68,8 +73,18 @@ export function EmailIndex() {
       setEmails((emailsPrev) => {
         return emailsPrev.filter((email) => email.id !== emailId);
       });
+      eventBusService.emmit("show-use-msg", {
+        type: "success",
+        txt: "email are delted!",
+        show: true,
+      });
     } catch (error) {
       console.log("Error deleting email", error);
+      eventBusService.emmit("show-use-msg", {
+        type: "error",
+        txt: "failed to delete email",
+        show: true,
+      });
     }
   }
 
@@ -82,8 +97,19 @@ export function EmailIndex() {
           return currEmail.id === updatedEmail.id ? updatedEmail : currEmail;
         });
       });
+
+      eventBusService.emmit("show-use-msg", {
+        type: "success",
+        txt: "email was updated!",
+        show: true,
+      });
     } catch (error) {
       console.log("Error updating email", error);
+      eventBusService.emmit("show-use-msg", {
+        type: "error",
+        txt: "fail to updated email :(",
+        show: true,
+      });
     }
   }
 
@@ -91,8 +117,18 @@ export function EmailIndex() {
     try {
       emailService.save(email);
       setEmails((prevEmails) => [...prevEmails, email]);
+      eventBusService.emmit("show-use-msg", {
+        type: "success",
+        txt: "email are saved!",
+        show: true,
+      });
     } catch (error) {
       console.log("had issue add email", error);
+      eventBusService.emmit("show-use-msg", {
+        type: "error",
+        txt: "email not saved :(",
+        show: true,
+      });
     }
   }
 

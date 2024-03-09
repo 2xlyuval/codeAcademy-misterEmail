@@ -14,6 +14,14 @@
     transform: translateY(-100%);
 }
 
+.user-msg.success {
+    background-color: rgb(162, 220, 193);
+}
+
+.user-msg.error {
+    background-color: rgb(242, 178, 168);
+}
+
 .user-msg.show {
     transform: translateY(0%);
 }

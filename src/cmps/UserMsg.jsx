@@ -3,7 +3,7 @@ import closeIcon from "../assets/imgs/ic_close.png";
 import { eventBusService } from "../services/eventbus.service";
 export function UserMsg() {
   const [msg, setMsg] = useState({
-    type: "succsess",
+    type: "success",
     txt: "this is good",
     show: false,
   });
