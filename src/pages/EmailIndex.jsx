@@ -8,6 +8,7 @@ import { EmailHeader } from "../cmps/EmailHeader";
 import { EmailList } from "../cmps/EmailList";
 import { EmailMainMenu } from "../cmps/EmailMainMenu";
 import { EmailCompose } from "../cmps/EmailCompose";
+import { eventBusService } from "../services/eventbus.service";
 
 export function EmailIndex() {
   const params = useParams();
