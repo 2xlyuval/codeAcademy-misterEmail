@@ -167,6 +167,10 @@ function filterEmails(emails, filterBy) {
       filteredEmails = emails.filter((email) => email.removedAt);
       filteredEmails = filterByHasStr(filteredEmails, hasStr);
       break;
+    case "draft":
+      filteredEmails = emails.filter((email) => email.isDraft);
+      filteredEmails = filterByHasStr(filteredEmails, hasStr);
+      break;
   }
   return filteredEmails;
 }

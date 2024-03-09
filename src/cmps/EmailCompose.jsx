@@ -18,12 +18,16 @@ export function EmailCompose({ params, onAddEmail }) {
         [field]: value,
       };
     });
+
+    setTimeout(() => {
+      onAddEmail(email);
+    }, 5000);
   }
 
   async function onSaveEmail(ev) {
     ev.preventDefault();
     try {
-      await onAddEmail(email);
+      await onAddEmail({ ...email, isDraft: false });
       navigate(`/email/${params.folder}`);
     } catch (error) {
       console.log("had issue save email", error);
