@@ -8,6 +8,7 @@ import { AppFooter } from "./cmps/AppFooter";
 import { AboutProject } from "./pages/AboutProject";
 import { AboutTeam } from "./pages/AboutTeam";
 import { EmailDetails } from "./cmps/EmailDetails";
+import { UserMsg } from "./cmps/UserMsg";
 
 export function App() {
   return (
@@ -31,6 +32,7 @@ export function App() {
           </Routes>
         </main>
         <AppFooter />
+        <UserMsg />
       </section>
     </Router>
   );
