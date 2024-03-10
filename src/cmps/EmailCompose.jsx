@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { emailService } from "../services/email.service";
 
@@ -11,6 +11,13 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
   const [email, setEmail] = useState(emailService.getDefaultEmail());
   //minimized, normal, fullscreen
   const [viewState, setViewState] = useState("normal");
+
+  useEffect(() => {
+    if (timeLeft == 0) {
+      clearInterval(timerIntervalRef.current);
+      setTimeLeft(5);
+    }
+  }, [timeLeft]);
 
   useEffect(() => {
     if (emailId) loadEmail();
@@ -34,22 +41,27 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
         [field]: value,
       };
     });
-
-    //TODO - need to add once as draft
-    // setTimeout(() => {
-    //   onAddEmail(email);
-    // }, 5000);
+    // Q - try to use interval but it was too complicated
   }
 
-  //TODO - need to sync between draft / saved /sent
-  async function onSaveEmail(ev) {
-    ev.preventDefault();
+  //Q - problem that every change the service didnt bring the id on time so it adds mulitiple times
+  async function onSaveEmail() {
     try {
       if (email.id) await onUpdateEmail(email);
+      else await onAddEmail(email);
+    } catch (error) {
+      console.log("had issue save email", error);
+    }
+  }
+
+  async function onSentEmail(ev) {
+    ev.preventDefault();
+    try {
+      if (email.id) await onUpdateEmail({ ...email, isDraft: false });
       else await onAddEmail({ ...email, isDraft: false });
       navigate(`/email/${params.folder}`);
     } catch (error) {
-      console.log("had issue save email", error);
+      console.log("had issue sent email", error);
     }
   }
 
@@ -78,7 +90,7 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
             </Link>
           </div>
         </div>
-        <form onSubmit={onSaveEmail}>
+        <form onSubmit={onSentEmail}>
           <label htmlFor="to">
             <input
               type="email"
