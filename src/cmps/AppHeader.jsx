@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom"
 
 export function AppHeader() {
   return (
@@ -27,5 +27,5 @@ export function AppHeader() {
         </nav>
       </section>
     </header>
-  );
+  )
 }

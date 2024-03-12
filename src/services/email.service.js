@@ -1,5 +1,5 @@
-import { storageService } from "./async-storage.service.js";
-import { utilService } from "./util.service.js";
+import { storageService } from "./async-storage.service.js"
+import { utilService } from "./util.service.js"
 
 export const emailService = {
   query,
@@ -9,13 +9,13 @@ export const emailService = {
   getDefaultFilter,
   getFilterFromParams,
   getDefaultEmail,
-};
+}
 
-const STORAGE_KEY = "emails";
+const STORAGE_KEY = "emails"
 const loggedinUser = {
   userEmail: "user@appsus.com",
   fullname: "Mahatma Appsus",
-};
+}
 const emailsDummyData = [
   {
     id: "e101",
@@ -128,52 +128,50 @@ const emailsDummyData = [
     to: "notMyUser@appsus.com",
     isDraft: true,
   },
-];
+]
 
-_createEmails();
+_createEmails()
 
 async function query(filterBy) {
-  let emails = await storageService.query(STORAGE_KEY);
+  let emails = await storageService.query(STORAGE_KEY)
   if (filterBy) {
-    emails = filterEmails(emails, filterBy);
+    emails = filterEmails(emails, filterBy)
   }
-  return emails;
+  return emails
 }
 
+// TODO: no need isDraft - we can use sentAt
 function filterEmails(emails, filterBy) {
-  let filteredEmails = emails;
-  const { hasStr, from, subject, isRead: isReadStr, date, folder } = filterBy;
-  const isRead = _convertToBoolean(isReadStr);
-  filteredEmails = filteredEmails.filter((email) => email.removedAt == null);
+  let filteredEmails = emails
+  const { hasStr, from, subject, isRead: isReadStr, date, folder } = filterBy
+  const isRead = _convertToBoolean(isReadStr)
+  filteredEmails = filteredEmails.filter((email) => email.removedAt == null)
   switch (folder) {
     case "inbox":
       filteredEmails = filteredEmails.filter(
         (email) => email.to == loggedinUser.userEmail
-      );
-      filteredEmails = filterByHasStr(filteredEmails, hasStr);
-      break;
+      )
+      break
     case "starred":
-      filteredEmails = filteredEmails.filter(
-        (email) => email.isStarred == true
-      );
-      filteredEmails = filterByHasStr(filteredEmails, hasStr);
-      break;
+      filteredEmails = filteredEmails.filter((email) => email.isStarred == true)
+      break
     case "sent":
       filteredEmails = filteredEmails.filter(
         (email) => email.to != loggedinUser.userEmail
-      );
-      filteredEmails = filterByHasStr(filteredEmails, hasStr);
-      break;
+      )
+      break
     case "trash":
-      filteredEmails = emails.filter((email) => email.removedAt);
-      filteredEmails = filterByHasStr(filteredEmails, hasStr);
-      break;
+      filteredEmails = emails.filter((email) => email.removedAt)
+      break
     case "draft":
-      filteredEmails = emails.filter((email) => email.isDraft);
-      filteredEmails = filterByHasStr(filteredEmails, hasStr);
-      break;
+      filteredEmails = emails.filter((email) => email.isDraft)
+      break
   }
-  return filteredEmails;
+  if (hasStr) {
+    filteredEmails = filterByHasStr(filteredEmails, hasStr)
+  }
+
+  return filteredEmails
 }
 
 function filterByHasStr(email, hasStr) {
@@ -182,7 +180,7 @@ function filterByHasStr(email, hasStr) {
       email.subject.toLowerCase().includes(hasStr.toLowerCase()) ||
       email.body.toLowerCase().includes(hasStr.toLowerCase()) ||
       email.from.toLowerCase().includes(hasStr.toLowerCase())
-  );
+  )
 }
 
 function getDefaultFilter() {
@@ -193,31 +191,31 @@ function getDefaultFilter() {
     isRead: null,
     date: "",
     folder: "inbox",
-  };
+  }
 }
 
 function getFilterFromParams(searchParams) {
-  const defaultFilter = getDefaultFilter();
-  const filetrBy = {};
+  const defaultFilter = getDefaultFilter()
+  const filetrBy = {}
   for (const field in defaultFilter) {
-    filetrBy[field] = searchParams.get(field) || defaultFilter[field];
+    filetrBy[field] = searchParams.get(field) || defaultFilter[field]
   }
-  return filetrBy;
+  return filetrBy
 }
 
 function getById(id) {
-  return storageService.get(STORAGE_KEY, id);
+  return storageService.get(STORAGE_KEY, id)
 }
 
 function remove(id) {
-  return storageService.remove(STORAGE_KEY, id);
+  return storageService.remove(STORAGE_KEY, id)
 }
 
 function save(emailToSave) {
   if (emailToSave.id) {
-    return storageService.put(STORAGE_KEY, emailToSave);
+    return storageService.put(STORAGE_KEY, emailToSave)
   } else {
-    return storageService.post(STORAGE_KEY, emailToSave);
+    return storageService.post(STORAGE_KEY, emailToSave)
   }
 }
 
@@ -232,13 +230,13 @@ function getDefaultEmail() {
     isRead: true,
     removedAt: null,
     isDraft: true,
-  };
+  }
 }
 
 function _createEmails() {
-  let emails = utilService.loadFromStorage(STORAGE_KEY);
+  let emails = utilService.loadFromStorage(STORAGE_KEY)
   if (!emails || !emails.length) {
-    emails = emailsDummyData;
+    emails = emailsDummyData
     // for (let i = 11; i <= 50; i++) {
     //   emails.push({
     //     id: `e${i}`,
@@ -252,11 +250,11 @@ function _createEmails() {
     //     to: "user@appsus.com",
     //   });
     // }
-    utilService.saveToStorage(STORAGE_KEY, emails);
+    utilService.saveToStorage(STORAGE_KEY, emails)
   }
 }
 
 function _convertToBoolean(value) {
-  var boolianVal = value === "null" ? null : value === "true";
-  return boolianVal;
+  var boolianVal = value === "null" ? null : value === "true"
+  return boolianVal
 }

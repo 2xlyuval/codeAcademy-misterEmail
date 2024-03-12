@@ -1,36 +1,36 @@
-import { useEffect, useState } from "react";
-import { svg } from "../assets/svg.jsx";
-import { emailService } from "../services/email.service.js";
+import { useEffect, useState } from "react"
+import { svg } from "../assets/svg.jsx"
+import { emailService } from "../services/email.service.js"
 
 export function EmailFilter({ filterBy, onSetFilter }) {
-  const [filterByToEdit, setFilterByToEdit] = useState(filterBy);
-  const [displayForm, setDisplayForm] = useState(false);
+  const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
+  const [displayForm, setDisplayForm] = useState(false)
 
   useEffect(() => {
-    onSetFilter(filterByToEdit);
-  }, []);
+    onSetFilter(filterByToEdit)
+  }, [])
 
   function handleChange(ev) {
-    let { name: field, value, type } = ev.target;
+    let { name: field, value, type } = ev.target
 
     setFilterByToEdit((prevFilter) => {
       return {
         ...prevFilter,
         [field]: value,
-      };
-    });
+      }
+    })
   }
 
   function onSubmit(e) {
-    e.preventDefault();
-    onSetFilter(filterByToEdit);
-    setDisplayForm(false);
+    e.preventDefault()
+    onSetFilter(filterByToEdit)
+    setDisplayForm(false)
   }
 
   function onClearFilter() {
-    setFilterByToEdit(emailService.getDefaultFilter());
-    onSetFilter(emailService.getDefaultFilter());
-    setDisplayForm(false);
+    setFilterByToEdit(emailService.getDefaultFilter())
+    onSetFilter(emailService.getDefaultFilter())
+    setDisplayForm(false)
   }
 
   return (
@@ -47,7 +47,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
           value={filterByToEdit.hasStr}
           onChange={handleChange}
           onKeyDown={(e) => {
-            if (e.key == "Enter") onSetFilter(filterByToEdit);
+            if (e.key == "Enter") onSetFilter(filterByToEdit)
           }}
         />
         <span
@@ -117,5 +117,5 @@ export function EmailFilter({ filterBy, onSetFilter }) {
         </div>
       </form>
     </div>
-  );
+  )
 }

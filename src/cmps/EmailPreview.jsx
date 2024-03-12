@@ -1,13 +1,13 @@
-import { Link, useParams } from "react-router-dom";
-import { utilService } from "../services/util.service";
+import { Link, useParams } from "react-router-dom"
+import { utilService } from "../services/util.service"
 
 export function EmailPreview({ email }) {
-  const params = useParams();
+  const params = useParams()
 
   const path =
     params.folder == "draft"
       ? `/email/${params.folder}?compose=${email.id}`
-      : `/email/${params.folder}/${email.id}`;
+      : `/email/${params.folder}/${email.id}`
 
   return (
     <Link to={path}>
@@ -25,5 +25,5 @@ export function EmailPreview({ email }) {
         </div>
       </article>
     </Link>
-  );
+  )
 }

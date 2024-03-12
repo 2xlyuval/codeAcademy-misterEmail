@@ -1,67 +1,62 @@
-import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { emailService } from "../services/email.service";
+import { useEffect, useRef, useState } from "react"
+import { Link, useNavigate, useSearchParams } from "react-router-dom"
+import { emailService } from "../services/email.service"
 
 export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
   const emailId =
-    searchParams.get("compose") != "new" ? searchParams.get("compose") : null;
+    searchParams.get("compose") != "new" ? searchParams.get("compose") : null
 
-  const [email, setEmail] = useState(emailService.getDefaultEmail());
+  const [email, setEmail] = useState(emailService.getDefaultEmail())
   //minimized, normal, fullscreen
-  const [viewState, setViewState] = useState("normal");
+  const [viewState, setViewState] = useState("normal")
 
   useEffect(() => {
-    if (timeLeft == 0) {
-      clearInterval(timerIntervalRef.current);
-      setTimeLeft(5);
-    }
-  }, [timeLeft]);
-
-  useEffect(() => {
-    if (emailId) loadEmail();
-  }, []);
+    if (emailId) loadEmail()
+  }, [])
 
   async function loadEmail() {
     try {
-      const email = await emailService.getById(emailId);
-      setEmail(email);
+      const email = await emailService.getById(emailId)
+      setEmail(email)
     } catch (error) {
-      console.log("has issues getting email by id", error);
+      console.log("has issues getting email by id", error)
     }
   }
 
   function handleChange(ev) {
-    let { name: field, value, type } = ev.target;
+    let { name: field, value, type } = ev.target
 
     setEmail((prevEmail) => {
       return {
         ...prevEmail,
         [field]: value,
-      };
-    });
-    // Q - try to use interval but it was too complicated
+      }
+    })
+    // Q - try to use setTimeout but it was too complicated
+    // A - u want to save the setTimeout id inside useRef() and add a cleanup function to the useEffect
+    // that will remove the useRef.current
   }
 
   //Q - problem that every change the service didnt bring the id on time so it adds mulitiple times
   async function onSaveEmail() {
     try {
-      if (email.id) await onUpdateEmail(email);
-      else await onAddEmail(email);
+      if (email.id) await onUpdateEmail(email)
+      else await onAddEmail(email)
     } catch (error) {
-      console.log("had issue save email", error);
+      console.log("had issue save email", error)
     }
   }
 
   async function onSentEmail(ev) {
-    ev.preventDefault();
+    ev.preventDefault()
     try {
-      if (email.id) await onUpdateEmail({ ...email, isDraft: false });
-      else await onAddEmail({ ...email, isDraft: false });
-      navigate(`/email/${params.folder}`);
+      if (email.id) await onUpdateEmail({ ...email, isDraft: false })
+      else await onAddEmail({ ...email, isDraft: false })
+      navigate(`/email/${params.folder}`)
     } catch (error) {
-      console.log("had issue sent email", error);
+      console.log("had issue sent email", error)
     }
   }
 
@@ -123,5 +118,5 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
         </form>
       </div>
     </div>
-  );
+  )
 }

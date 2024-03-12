@@ -1,5 +1,5 @@
-import { EmailFilter } from "../cmps/EmailFilter";
-import logoImg from "../assets/imgs/gmail-logo.png";
+import { EmailFilter } from "../cmps/EmailFilter"
+import logoImg from "../assets/imgs/gmail-logo.png"
 
 export function EmailHeader({ filterBy, onSetFilter }) {
   return (
@@ -16,5 +16,5 @@ export function EmailHeader({ filterBy, onSetFilter }) {
       </div>
       <EmailFilter filterBy={filterBy} onSetFilter={onSetFilter} />
     </header>
-  );
+  )
 }

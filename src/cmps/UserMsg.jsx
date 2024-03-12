@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react";
-import closeIcon from "../assets/imgs/ic_close.png";
-import { eventBusService } from "../services/eventbus.service";
+import { useEffect, useState } from "react"
+import closeIcon from "../assets/imgs/ic_close.png"
+import { eventBusService } from "../services/eventbus.service"
 export function UserMsg() {
   const [msg, setMsg] = useState({
     type: "success",
     txt: "this is good",
     show: false,
-  });
+  })
 
   useEffect(() => {
     eventBusService.on("show-use-msg", (msg) => {
-      setMsg(msg);
-      setTimeout(closeMsg, 2000);
-    });
-  }, []);
+      setMsg(msg)
+      setTimeout(closeMsg, 2000)
+    })
+  }, [])
 
   function closeMsg() {
-    setMsg((prevMsg) => ({ ...prevMsg, show: false }));
+    setMsg((prevMsg) => ({ ...prevMsg, show: false }))
   }
 
-  const msgClass = msg.show ? `show ${msg.type}` : "";
+  const msgClass = msg.show ? `show ${msg.type}` : ""
 
   return (
     <div className={`user-msg ${msgClass}`}>
@@ -28,5 +28,5 @@ export function UserMsg() {
         <img src={closeIcon} alt="" />
       </div>
     </div>
-  );
+  )
 }

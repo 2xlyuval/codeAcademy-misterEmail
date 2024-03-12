@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom"
 
 export function AboutUs() {
   return (
@@ -16,5 +16,5 @@ export function AboutUs() {
         <Outlet />
       </div>
     </section>
-  );
+  )
 }

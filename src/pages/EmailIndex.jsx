@@ -1,53 +1,53 @@
-import { useState, useEffect } from "react";
-import { Outlet, useParams } from "react-router";
-import { useSearchParams } from "react-router-dom";
+import { useState, useEffect } from "react"
+import { Outlet, useParams } from "react-router"
+import { useSearchParams } from "react-router-dom"
 
-import { emailService } from "../services/email.service";
+import { emailService } from "../services/email.service"
 
-import { EmailHeader } from "../cmps/EmailHeader";
-import { EmailList } from "../cmps/EmailList";
-import { EmailMainMenu } from "../cmps/EmailMainMenu";
-import { EmailCompose } from "../cmps/EmailCompose";
-import { eventBusService } from "../services/eventbus.service";
+import { EmailHeader } from "../cmps/EmailHeader"
+import { EmailList } from "../cmps/EmailList"
+import { EmailMainMenu } from "../cmps/EmailMainMenu"
+import { EmailCompose } from "../cmps/EmailCompose"
+import { eventBusService } from "../services/eventbus.service"
 
 export function EmailIndex() {
-  const params = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const params = useParams()
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  const [emails, setEmails] = useState(null);
+  const [emails, setEmails] = useState(null)
   const [filterBy, setFilterBy] = useState(
     emailService.getFilterFromParams(searchParams)
-  );
-  const [unreadCount, setUnreadCount] = useState(null);
+  )
+  const [unreadCount, setUnreadCount] = useState(null)
 
   useEffect(() => {
-    countUnreadEmails();
-  }, []);
+    countUnreadEmails()
+  }, [])
 
   useEffect(() => {
-    setFilterBy((prevFilter) => ({ ...prevFilter, folder: params.folder }));
-    document.title = params.folder;
-  }, [params.folder]);
+    setFilterBy((prevFilter) => ({ ...prevFilter, folder: params.folder }))
+    document.title = params.folder
+  }, [params.folder])
 
   useEffect(() => {
-    setSearchParams(filterBy);
-    loadEmails();
-  }, [filterBy]);
+    setSearchParams(filterBy)
+    loadEmails()
+  }, [filterBy])
 
   async function countUnreadEmails() {
     try {
       const unradEmails = await emailService.query({
         ...emailService.getDefaultFilter(),
         isRead: false,
-      });
-      setUnreadCount(unradEmails.length);
+      })
+      setUnreadCount(unradEmails.length)
     } catch (error) {
-      console.log("Error loding emails", error);
+      console.log("Error loding emails", error)
     }
   }
 
   function onSetFilter(fieldsToUpdate) {
-    setFilterBy((prevFilter) => ({ ...prevFilter, ...fieldsToUpdate }));
+    setFilterBy((prevFilter) => ({ ...prevFilter, ...fieldsToUpdate }))
   }
 
   async function loadEmails() {
@@ -55,87 +55,87 @@ export function EmailIndex() {
       const emails = await emailService.query({
         ...filterBy,
         folder: params.folder,
-      });
-      setEmails(emails);
+      })
+      setEmails(emails)
     } catch (error) {
-      console.log("Error loding emails", error);
+      console.log("Error loding emails", error)
       eventBusService.emmit("show-use-msg", {
         type: "error",
         txt: "failed to load emails",
         show: true,
-      });
+      })
     }
   }
 
   async function onDeleteEmail(emailId) {
     try {
-      await emailService.remove(emailId);
+      await emailService.remove(emailId)
       //update emails state to save api calls
       setEmails((emailsPrev) => {
-        return emailsPrev.filter((email) => email.id !== emailId);
-      });
+        return emailsPrev.filter((email) => email.id !== emailId)
+      })
       eventBusService.emmit("show-use-msg", {
         type: "success",
         txt: "email are delted!",
         show: true,
-      });
+      })
     } catch (error) {
-      console.log("Error deleting email", error);
+      console.log("Error deleting email", error)
       eventBusService.emmit("show-use-msg", {
         type: "error",
         txt: "failed to delete email",
         show: true,
-      });
+      })
     }
   }
 
   async function onUpdateEmail(email) {
     try {
-      const updatedEmail = await emailService.save(email);
+      const updatedEmail = await emailService.save(email)
       //update emails state to save api calls
       setEmails((emailsPrev) => {
         return emailsPrev.map((currEmail) => {
-          return currEmail.id === updatedEmail.id ? updatedEmail : currEmail;
-        });
-      });
+          return currEmail.id === updatedEmail.id ? updatedEmail : currEmail
+        })
+      })
 
       eventBusService.emmit("show-use-msg", {
         type: "success",
         txt: "email was updated!",
         show: true,
-      });
+      })
     } catch (error) {
-      console.log("Error updating email", error);
+      console.log("Error updating email", error)
       eventBusService.emmit("show-use-msg", {
         type: "error",
         txt: "fail to updated email :(",
         show: true,
-      });
+      })
     }
   }
 
   async function onAddEmail(email) {
     try {
-      const savedEmail = await emailService.save(email);
-      setEmails((prevEmails) => [...prevEmails, savedEmail]);
+      const savedEmail = await emailService.save(email)
+      setEmails((prevEmails) => [...prevEmails, savedEmail])
       eventBusService.emmit("show-use-msg", {
         type: "success",
         txt: "email are sent!",
         show: true,
-      });
+      })
     } catch (error) {
-      console.log("had issue add email", error);
+      console.log("had issue add email", error)
       eventBusService.emmit("show-use-msg", {
         type: "error",
         txt: "email not sent :(",
         show: true,
-      });
+      })
     }
   }
 
   //wating for the data come back from storage
-  if (!emails) return <div>Loading...</div>;
-  const { hasStr, from, subject, isRead, date, folder } = filterBy;
+  if (!emails) return <div>Loading...</div>
+  const { hasStr, from, subject, isRead, date, folder } = filterBy
   return (
     <section className="email-index">
       <EmailHeader
@@ -166,5 +166,5 @@ export function EmailIndex() {
         <section className="side-panel"></section>
       </main>
     </section>
-  );
+  )
 }

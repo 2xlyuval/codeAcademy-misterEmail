@@ -1,15 +1,15 @@
-import inboxOutline from "../assets/imgs/inbox-outline.png";
-import inboxFill from "../assets/imgs/inbox-fill.png";
-import starOutline from "../assets/imgs/star-outline.png";
-import starFill from "../assets/imgs/star-fill.png";
-import trashOutline from "../assets/imgs/delete-outline.png";
-import trashFill from "../assets/imgs/delete-fill.png";
-import sentOutline from "../assets/imgs/sent-outline.png";
-import sentFill from "../assets/imgs/sent-fill.png";
-import draftOutline from "../assets/imgs/draft-outline.png";
-import draftFill from "../assets/imgs/draft-fill.png";
-import compose from "../assets/imgs/compose.png";
-import { Link, NavLink } from "react-router-dom";
+import inboxOutline from "../assets/imgs/inbox-outline.png"
+import inboxFill from "../assets/imgs/inbox-fill.png"
+import starOutline from "../assets/imgs/star-outline.png"
+import starFill from "../assets/imgs/star-fill.png"
+import trashOutline from "../assets/imgs/delete-outline.png"
+import trashFill from "../assets/imgs/delete-fill.png"
+import sentOutline from "../assets/imgs/sent-outline.png"
+import sentFill from "../assets/imgs/sent-fill.png"
+import draftOutline from "../assets/imgs/draft-outline.png"
+import draftFill from "../assets/imgs/draft-fill.png"
+import compose from "../assets/imgs/compose.png"
+import { Link, NavLink } from "react-router-dom"
 
 export function EmailMainMenu({ params, unreadCount }) {
   const menuItems = [
@@ -43,8 +43,9 @@ export function EmailMainMenu({ params, unreadCount }) {
       images: { outline: draftOutline, fill: draftFill },
       to: "/draft",
     },
-  ];
+  ]
   return (
+    //TODO: apend parameter compose=new to existing search params
     <section className="main-menu">
       <Link to={"?compose=new"} className="compose-mail">
         <span>
@@ -64,7 +65,7 @@ export function EmailMainMenu({ params, unreadCount }) {
         />
       ))}
     </section>
-  );
+  )
 }
 
 function MainMenuItem({ name, title, to, images, params, unreadCount }) {
@@ -81,5 +82,5 @@ function MainMenuItem({ name, title, to, images, params, unreadCount }) {
         <span style={{ marginLeft: "auto" }}>{unreadCount}</span>
       )}
     </NavLink>
-  );
+  )
 }

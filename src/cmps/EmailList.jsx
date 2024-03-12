@@ -1,30 +1,31 @@
-import { useParams } from "react-router";
-import { EmailPreview } from "./EmailPreview";
+import { useParams } from "react-router"
+import { EmailPreview } from "./EmailPreview"
 
 export function EmailList({ emails, onUpdateEmail, onDeleteEmail }) {
-  const params = useParams();
+  const params = useParams()
 
   function toggleStar(email) {
-    const updatedEmail = { ...email, isStarred: !email.isStarred };
-    onUpdateEmail(updatedEmail);
+    const updatedEmail = { ...email, isStarred: !email.isStarred }
+    // check if email.isStarred == false && folder = starred.....
+    onUpdateEmail(updatedEmail)
   }
 
   function toggleRead(email) {
-    const updatedEmail = { ...email, isRead: !email.isRead };
-    onUpdateEmail(updatedEmail);
+    const updatedEmail = { ...email, isRead: !email.isRead }
+    onUpdateEmail(updatedEmail)
   }
 
   function onRemoveEmail(email) {
     if (params.folder == "trash") {
-      onDeleteEmail(email.id);
+      onDeleteEmail(email.id)
     } else {
-      moveEmailToTrash(email);
+      moveEmailToTrash(email)
     }
   }
 
   function moveEmailToTrash(email) {
-    const updatedEmail = { ...email, removedAt: Date.now() };
-    onUpdateEmail(updatedEmail);
+    const updatedEmail = { ...email, removedAt: Date.now() }
+    onUpdateEmail(updatedEmail)
   }
 
   return (
@@ -66,9 +67,9 @@ export function EmailList({ emails, onUpdateEmail, onDeleteEmail }) {
                 <div className="email-snooze" data-tooltip="snooze"></div>
               </div>
             </li>
-          );
+          )
         })}
       </ul>
     </section>
-  );
+  )
 }
