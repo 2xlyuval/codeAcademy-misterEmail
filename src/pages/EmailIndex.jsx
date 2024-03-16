@@ -9,6 +9,7 @@ import { EmailList } from "../cmps/EmailList"
 import { EmailMainMenu } from "../cmps/EmailMainMenu"
 import { EmailCompose } from "../cmps/EmailCompose"
 import { eventBusService } from "../services/eventbus.service"
+import { useEffectUpdate } from "../customHooks/useEffectUpdate"
 
 export function EmailIndex() {
   const params = useParams()
@@ -20,6 +21,7 @@ export function EmailIndex() {
   )
   const [unreadCount, setUnreadCount] = useState(null)
 
+  //TODO - fix logic
   // useEffect(() => {
   //   countUnreadEmails()
   // }, [])
@@ -29,7 +31,7 @@ export function EmailIndex() {
     document.title = params.folder
   }, [params.folder])
 
-  useEffect(() => {
+  useEffectUpdate(() => {
     setSearchParams(filterBy)
     loadEmails()
   }, [filterBy])
@@ -117,7 +119,8 @@ export function EmailIndex() {
   async function onAddEmail(email) {
     try {
       const savedEmail = await emailService.save(email)
-      setEmails((prevEmails) => [...prevEmails, savedEmail])
+      if (params.folder == "sent")
+        setEmails((prevEmails) => [...prevEmails, savedEmail])
       eventBusService.emmit("show-use-msg", {
         type: "success",
         txt: "email are sent!",

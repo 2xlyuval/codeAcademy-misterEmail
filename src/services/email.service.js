@@ -159,7 +159,9 @@ function filterEmails(emails, filterBy) {
       filteredEmails = filteredEmails.filter((email) => email.isStarred == true)
       break
     case "sent":
-      //all emails that sent FROM me
+      //all emails that have bben sent
+      filteredEmails = filteredEmails.filter((email) => email.sentAt)
+      //and that was sent by me
       filteredEmails = filteredEmails.filter(
         (email) => email.from == loggedinUser.userEmail
       )
@@ -270,7 +272,7 @@ function getDefaultEmail() {
     to: "",
     subject: "",
     from: loggedinUser.userEmail,
-    sentAt: Date.now(),
+    sentAt: null,
     isStarred: false,
     isRead: true,
     removedAt: null,

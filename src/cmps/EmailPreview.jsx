@@ -13,7 +13,9 @@ export function EmailPreview({ email }) {
     <Link to={path}>
       <article className="email-preview flex align-center">
         <div className="email-from">
-          {utilService.getStringBeforeChar(email.from, "@")}
+          {params.folder == "draft"
+            ? "draft"
+            : utilService.getStringBeforeChar(email.from, "@")}
         </div>
         <div className="email-content">
           <span className="email-subject">{email.subject}</span>

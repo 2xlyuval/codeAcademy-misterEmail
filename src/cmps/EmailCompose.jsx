@@ -1,20 +1,34 @@
 import { useEffect, useRef, useState } from "react"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import { emailService } from "../services/email.service"
+import { useEffectUpdate } from "../customHooks/useEffectUpdate"
 
 export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
-  const emailId =
-    searchParams.get("compose") != "new" ? searchParams.get("compose") : null
 
   const [email, setEmail] = useState(emailService.getDefaultEmail())
-  //minimized, normal, fullscreen
-  const [viewState, setViewState] = useState("normal")
+  const [viewState, setViewState] = useState("normal") //minimized, normal, fullscreen
+
+  const draftTimeout = useRef()
+  const timeOutDur = 2000
+
+  const emailId =
+    searchParams.get("compose") != "new" ? searchParams.get("compose") : null
 
   useEffect(() => {
     if (emailId) loadEmail()
   }, [])
+
+  useEffectUpdate(() => {
+    draftTimeout.current = setTimeout(() => {
+      console.log("save")
+      onSaveEmail()
+    }, timeOutDur)
+    return () => {
+      clearTimeout(draftTimeout.current)
+    }
+  }, [email])
 
   async function loadEmail() {
     try {
@@ -34,13 +48,8 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
         [field]: value,
       }
     })
-    // Q - try to use setTimeout/interval but it was too complicated
-    // A - u want to save the setTimeout id inside useRef() and add a cleanup function to the useEffect
-    // that will remove the useRef.current
-    // and use costume hook to srart only when email change
   }
 
-  //Q - problem that every change the service didnt bring the id on time so it adds mulitiple times
   async function onSaveEmail() {
     try {
       if (email.id) await onUpdateEmail(email)
