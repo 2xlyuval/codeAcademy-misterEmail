@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { Link, useNavigate, useSearchParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { emailService } from "../services/email.service"
 import { useEffectUpdate } from "../customHooks/useEffectUpdate"
 
@@ -30,6 +30,13 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
       clearTimeout(draftTimeout.current)
     }
   }, [email])
+
+  function onCloseCompose() {
+    setSearchParams((prevParams) => {
+      prevParams.delete("compose")
+      return prevParams
+    })
+  }
 
   async function loadEmail() {
     try {
@@ -70,7 +77,7 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
     try {
       if (email.id) await onUpdateEmail({ ...email, sentAt: Date.now() })
       else await onAddEmail({ ...email, sentAt: Date.now() })
-      navigate(`/email/${params.folder}`)
+      onCloseCompose()
     } catch (error) {
       console.log("had issue sent email", error)
     }
@@ -96,9 +103,7 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
               }
               className="icon openClose-fullScren"
             ></span>
-            <Link to={`/email/${params.folder}`}>
-              <span className="icon close"></span>
-            </Link>
+            <span className="icon close" onClick={onCloseCompose}></span>
           </div>
         </div>
         <form onSubmit={onSentEmail}>

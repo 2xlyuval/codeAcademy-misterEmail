@@ -9,9 +9,10 @@ import sentFill from "../assets/imgs/sent-fill.png"
 import draftOutline from "../assets/imgs/draft-outline.png"
 import draftFill from "../assets/imgs/draft-fill.png"
 import compose from "../assets/imgs/compose.png"
-import { Link, NavLink } from "react-router-dom"
+import { Link, NavLink, useSearchParams } from "react-router-dom"
 
 export function EmailMainMenu({ params, unreadCount }) {
+  const [searchParams, setSearchParams] = useSearchParams()
   const menuItems = [
     {
       name: "inbox",
@@ -44,15 +45,22 @@ export function EmailMainMenu({ params, unreadCount }) {
       to: "/draft",
     },
   ]
+
+  function onOpenCompose() {
+    setSearchParams((prevSearchParams) => {
+      prevSearchParams.set("compose", "new")
+      return prevSearchParams
+    })
+  }
+
   return (
-    //TODO: apend parameter compose=new to existing search params
     <section className="main-menu">
-      <Link to={"?compose=new"} className="compose-mail">
+      <button onClick={onOpenCompose} className="compose-mail">
         <span>
           <img src={compose} alt="" />
-        </span>{" "}
+        </span>
         compose
-      </Link>
+      </button>
       {menuItems.map((item, idx) => (
         <MainMenuItem
           key={idx}

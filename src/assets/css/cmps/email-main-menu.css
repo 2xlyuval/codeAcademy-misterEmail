@@ -16,6 +16,7 @@ section.main-menu {
     font-weight: 500;
     text-transform: capitalize;
     gap: 12px;
+    border: none;
 }
 
 .compose-mail:hover {
