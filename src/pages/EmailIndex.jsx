@@ -126,6 +126,7 @@ export function EmailIndex() {
         txt: "email are sent!",
         show: true,
       })
+      return savedEmail
     } catch (error) {
       console.log("had issue add email", error)
       eventBusService.emmit("show-use-msg", {

@@ -11,7 +11,7 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
   const [viewState, setViewState] = useState("normal") //minimized, normal, fullscreen
 
   const draftTimeout = useRef()
-  const timeOutDur = 2000
+  const timeOutDur = 5000
 
   const emailId =
     searchParams.get("compose") != "new" ? searchParams.get("compose") : null
@@ -23,6 +23,7 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
   useEffectUpdate(() => {
     draftTimeout.current = setTimeout(() => {
       console.log("save")
+      console.log("email", email)
       onSaveEmail()
     }, timeOutDur)
     return () => {
@@ -52,8 +53,13 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
 
   async function onSaveEmail() {
     try {
-      if (email.id) await onUpdateEmail(email)
-      else await onAddEmail(email)
+      if (email.id) {
+        await onUpdateEmail(email)
+      } else {
+        const newEmail = await onAddEmail(email)
+        console.log("new mail", newEmail)
+        setEmail(newEmail)
+      }
     } catch (error) {
       console.log("had issue save email", error)
     }
@@ -62,8 +68,8 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
   async function onSentEmail(ev) {
     ev.preventDefault()
     try {
-      if (email.id) await onUpdateEmail(email)
-      else await onAddEmail(email)
+      if (email.id) await onUpdateEmail({ ...email, sentAt: Date.now() })
+      else await onAddEmail({ ...email, sentAt: Date.now() })
       navigate(`/email/${params.folder}`)
     } catch (error) {
       console.log("had issue sent email", error)
