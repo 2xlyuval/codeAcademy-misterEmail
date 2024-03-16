@@ -20,9 +20,9 @@ export function EmailIndex() {
   )
   const [unreadCount, setUnreadCount] = useState(null)
 
-  useEffect(() => {
-    countUnreadEmails()
-  }, [])
+  // useEffect(() => {
+  //   countUnreadEmails()
+  // }, [])
 
   useEffect(() => {
     setFilterBy((prevFilter) => ({ ...prevFilter, folder: params.folder }))

@@ -126,7 +126,6 @@ const emailsDummyData = [
     removedAt: null,
     from: "birthday@friends.com",
     to: "notMyUser@appsus.com",
-    isDraft: true,
   },
 ]
 
@@ -140,47 +139,92 @@ async function query(filterBy) {
   return emails
 }
 
-// TODO: no need isDraft - we can use sentAt
 function filterEmails(emails, filterBy) {
-  let filteredEmails = emails
+  let filteredEmails = []
   const { hasStr, from, subject, isRead: isReadStr, date, folder } = filterBy
   const isRead = _convertToBoolean(isReadStr)
-  filteredEmails = filteredEmails.filter((email) => email.removedAt == null)
+
+  // all email that havn't been removed
+  filteredEmails = emails.filter((email) => !email.removedAt)
+
   switch (folder) {
     case "inbox":
+      //all emails that sent TO me
       filteredEmails = filteredEmails.filter(
         (email) => email.to == loggedinUser.userEmail
       )
       break
     case "starred":
+      //all emails that are starred
       filteredEmails = filteredEmails.filter((email) => email.isStarred == true)
       break
     case "sent":
+      //all emails that sent FROM me
       filteredEmails = filteredEmails.filter(
-        (email) => email.to != loggedinUser.userEmail
+        (email) => email.from == loggedinUser.userEmail
       )
       break
     case "trash":
+      //all emails that been removed
       filteredEmails = emails.filter((email) => email.removedAt)
       break
     case "draft":
-      filteredEmails = emails.filter((email) => email.isDraft)
+      //all emails that havn't been sent
+      filteredEmails = filteredEmails.filter((email) => email.sentAt == null)
       break
   }
+  // filter by includes string
   if (hasStr) {
-    filteredEmails = filterByHasStr(filteredEmails, hasStr)
+    filteredEmails = filterByHasStr(filteredEmails, hasStr, [
+      "subject",
+      "body",
+      "from",
+    ])
   }
+
+  // filter by from
+  if (from) {
+    filteredEmails = filterByHasStr(filteredEmails, from, ["from"])
+  }
+
+  // filter by subject
+  if (subject) {
+    filteredEmails = filterByHasStr(filteredEmails, subject, ["subject"])
+  }
+
+  // filter by date
+  if (date) {
+    filteredEmails = filterBySpecificDate(filteredEmails, date)
+  }
+
+  // filter by isRead
+  filteredEmails = filterByIsRead(filteredEmails, isRead)
 
   return filteredEmails
 }
 
-function filterByHasStr(email, hasStr) {
-  return email.filter(
-    (email) =>
-      email.subject.toLowerCase().includes(hasStr.toLowerCase()) ||
-      email.body.toLowerCase().includes(hasStr.toLowerCase()) ||
-      email.from.toLowerCase().includes(hasStr.toLowerCase())
-  )
+function filterByIsRead(emails, isRead) {
+  if (isRead == true) return emails.filter((email) => email.isRead == true)
+  if (isRead == false) return emails.filter((email) => email.isRead == false)
+  return emails
+}
+
+function filterBySpecificDate(emails, targetDate) {
+  const targetTimestamp = new Date(targetDate).setUTCHours(0, 0, 0, 0)
+  return emails.filter((email) => {
+    const emailTimestamp = new Date(email.sentAt).setUTCHours(0, 0, 0, 0)
+    return emailTimestamp === targetTimestamp
+  })
+}
+
+function filterByHasStr(emails, hasStr, fields = ["subject", "body", "from"]) {
+  const regex = new RegExp(hasStr, "i")
+  return emails.filter((email) => {
+    return fields.some((field) => {
+      const fieldValue = email[field]
+      return fieldValue && regex.test(fieldValue)
+    })
+  })
 }
 
 function getDefaultFilter() {
@@ -188,9 +232,10 @@ function getDefaultFilter() {
     hasStr: "",
     from: "",
     subject: "",
-    isRead: null,
+    isRead: "null",
     date: "",
     folder: "inbox",
+    date: "",
   }
 }
 
@@ -229,7 +274,6 @@ function getDefaultEmail() {
     isStarred: false,
     isRead: true,
     removedAt: null,
-    isDraft: true,
   }
 }
 

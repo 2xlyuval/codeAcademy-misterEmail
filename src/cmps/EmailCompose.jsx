@@ -34,9 +34,10 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
         [field]: value,
       }
     })
-    // Q - try to use setTimeout but it was too complicated
+    // Q - try to use setTimeout/interval but it was too complicated
     // A - u want to save the setTimeout id inside useRef() and add a cleanup function to the useEffect
     // that will remove the useRef.current
+    // and use costume hook to srart only when email change
   }
 
   //Q - problem that every change the service didnt bring the id on time so it adds mulitiple times
@@ -52,8 +53,8 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
   async function onSentEmail(ev) {
     ev.preventDefault()
     try {
-      if (email.id) await onUpdateEmail({ ...email, isDraft: false })
-      else await onAddEmail({ ...email, isDraft: false })
+      if (email.id) await onUpdateEmail(email)
+      else await onAddEmail(email)
       navigate(`/email/${params.folder}`)
     } catch (error) {
       console.log("had issue sent email", error)

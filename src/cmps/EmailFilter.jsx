@@ -12,7 +12,6 @@ export function EmailFilter({ filterBy, onSetFilter }) {
 
   function handleChange(ev) {
     let { name: field, value, type } = ev.target
-
     setFilterByToEdit((prevFilter) => {
       return {
         ...prevFilter,
@@ -107,7 +106,12 @@ export function EmailFilter({ filterBy, onSetFilter }) {
         </div>
         <div className="form-input">
           <label htmlFor="date">date</label>
-          <input type="date" />
+          <input
+            type="date"
+            name="date"
+            value={filterByToEdit.date}
+            onChange={handleChange}
+          />
         </div>
         <div className="form-actoins">
           <button type="button" onClick={onClearFilter}>
