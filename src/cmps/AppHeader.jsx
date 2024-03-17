@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router-dom"
+import { svg } from "../assets/svg"
 
 export function AppHeader() {
   return (
@@ -23,6 +24,10 @@ export function AppHeader() {
             <li>
               <NavLink to="/email/inbox">Emails</NavLink>
             </li>
+            {/* Q - how to change params? */}
+            <Link to="/email/inbox?compose=new&to=help@gmail.com&subject=Help">
+              {svg.helpIcon}
+            </Link>
           </ul>
         </nav>
       </section>

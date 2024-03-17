@@ -18,15 +18,23 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
 
   useEffect(() => {
     if (emailId) loadEmail()
+
+    if (searchParams.has("subject", "Help")) {
+      setEmail((prevEmail) => ({
+        ...prevEmail,
+        to: searchParams.get("to"),
+        subject: searchParams.get("subject"),
+      }))
+    }
   }, [])
 
   useEffectUpdate(() => {
     draftTimeout.current = setTimeout(() => {
       console.log("save")
-      console.log("email", email)
       onSaveEmail()
     }, timeOutDur)
     return () => {
+      console.log("clear timeout")
       clearTimeout(draftTimeout.current)
     }
   }, [email])

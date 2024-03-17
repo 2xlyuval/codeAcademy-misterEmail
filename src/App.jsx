@@ -1,21 +1,20 @@
-import { Route, HashRouter as Router, Routes } from "react-router-dom";
+import { Route, HashRouter as Router, Routes } from "react-router-dom"
 
-import { AboutUs } from "./pages/AboutUs";
-import { EmailIndex } from "./pages/EmailIndex";
-import { Home } from "./pages/Home";
-import { AppHeader } from "./cmps/AppHeader";
-import { AppFooter } from "./cmps/AppFooter";
-import { AboutProject } from "./pages/AboutProject";
-import { AboutTeam } from "./pages/AboutTeam";
-import { EmailDetails } from "./cmps/EmailDetails";
-import { UserMsg } from "./cmps/UserMsg";
+import { AboutUs } from "./pages/AboutUs"
+import { EmailIndex } from "./pages/EmailIndex"
+import { Home } from "./pages/Home"
+import { AppHeader } from "./cmps/AppHeader"
+import { AppFooter } from "./cmps/AppFooter"
+import { AboutProject } from "./pages/AboutProject"
+import { AboutTeam } from "./pages/AboutTeam"
+import { EmailDetails } from "./cmps/EmailDetails"
+import { UserMsg } from "./cmps/UserMsg"
 
 export function App() {
   return (
     <Router>
       <section className="main-app">
         <AppHeader />
-
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -35,5 +34,5 @@ export function App() {
         <UserMsg />
       </section>
     </Router>
-  );
+  )
 }

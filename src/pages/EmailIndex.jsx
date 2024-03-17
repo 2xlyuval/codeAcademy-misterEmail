@@ -21,10 +21,10 @@ export function EmailIndex() {
   )
   const [unreadCount, setUnreadCount] = useState(null)
 
-  //TODO - fix logic
-  // useEffect(() => {
-  //   countUnreadEmails()
-  // }, [])
+  //TODO - what is the dependecies that update the number?
+  useEffect(() => {
+    countUnreadEmails()
+  }, [])
 
   useEffect(() => {
     setFilterBy((prevFilter) => ({ ...prevFilter, folder: params.folder }))
