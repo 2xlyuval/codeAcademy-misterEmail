@@ -3,12 +3,14 @@ import { useSearchParams } from "react-router-dom"
 import { emailService } from "../services/email.service"
 import { useEffectUpdate } from "../customHooks/useEffectUpdate"
 import { svg } from "../assets/svg"
+import GoogleMap from "./GoogleMap"
 
 export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const [email, setEmail] = useState(emailService.getDefaultEmail())
   const [viewState, setViewState] = useState("normal") //minimized, normal, fullscreen
+  const [userLoc, setUserLoc] = useState({})
 
   const draftTimeout = useRef()
   const timeOutDur = 5000
@@ -91,6 +93,21 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
     }
   }
 
+  function onGetUserLocation() {
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        }
+        console.log("my location", pos)
+      })
+    } else {
+      console.log("Browser doesn't support Geolocation")
+    }
+  }
+
   return (
     <div className={`email-compose-wrapper ${viewState}`}>
       <div className="email-compose">
@@ -143,9 +160,11 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
             value={email.body}
             onChange={handleChange}
           ></textarea>
+          {userLoc && <GoogleMap />}
           <div className="compose-action-btns">
             <button className="send-btn">send</button>
             <button
+              onClick={onGetUserLocation}
               type="button"
               className="my-location-btn"
               data-tooltip="Add my location"
