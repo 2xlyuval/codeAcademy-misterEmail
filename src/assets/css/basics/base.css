@@ -58,6 +58,9 @@ a:hover {
 button {
     font-family: inherit;
     cursor: pointer;
+    border: none;
+    padding: 0;
+    width: fit-content;
 
     * {
         pointer-events: none;

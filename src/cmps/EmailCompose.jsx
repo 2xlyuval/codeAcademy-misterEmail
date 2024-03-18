@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react"
-import { useNavigate, useSearchParams } from "react-router-dom"
+import { useSearchParams } from "react-router-dom"
 import { emailService } from "../services/email.service"
 import { useEffectUpdate } from "../customHooks/useEffectUpdate"
+import { svg } from "../assets/svg"
 
 export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
-  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const [email, setEmail] = useState(emailService.getDefaultEmail())
@@ -143,7 +143,16 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
             value={email.body}
             onChange={handleChange}
           ></textarea>
-          <button>send</button>
+          <div className="compose-action-btns">
+            <button className="send-btn">send</button>
+            <button
+              type="button"
+              className="my-location-btn"
+              data-tooltip="Add my location"
+            >
+              {svg.locationIcon}
+            </button>
+          </div>
         </form>
       </div>
     </div>

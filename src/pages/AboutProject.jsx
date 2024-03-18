@@ -16,5 +16,5 @@ export function AboutProject() {
         applications that enhance the way people interact with technology.
       </p>
     </section>
-  );
+  )
 }

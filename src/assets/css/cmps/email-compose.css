@@ -91,6 +91,52 @@
     display: none;
 }
 
+.email-compose form .compose-action-btns {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0 16px;
+
+}
+
+.email-compose .send-btn {
+    background-color: #0b57d0;
+    border-radius: 18px;
+    border: none;
+    font-size: .875rem;
+    color: white;
+    font-weight: 600;
+    height: 36px;
+    padding: 0 16px;
+    width: fit-content;
+    text-transform: capitalize;
+    min-width: 72px;
+    cursor: pointer;
+}
+
+.email-compose .send-btn:hover {
+    box-shadow: 0 1px 2px 0 rgba(26, 115, 232, 0.451), 0 1px 3px 1px rgba(26, 115, 232, 0.302);
+    background-color: #297be6;
+    outline: 1px solid transparent;
+}
+
+.email-compose .my-location-btn {
+    background-color: transparent;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.email-compose .my-location-btn * {
+    color: #444746;
+}
+
+.email-compose .my-location-btn:hover {
+    background-color: rgb(68, 71, 70, 0.078);
+}
+
+
 /* minimized */
 
 .email-compose-wrapper.minimized .email-compose form {
