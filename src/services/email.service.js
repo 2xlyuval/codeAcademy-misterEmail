@@ -33,7 +33,7 @@ const emailsDummyData = [
     subject: "Regarding our meeting",
     body: "Can we reschedule?",
     isRead: true,
-    isStarred: false,
+    isStarred: true,
     sentAt: 1645990191000, // Example timestamp, you can put any valid timestamp here
     removedAt: null,
     from: "boss@company.com",
@@ -76,7 +76,7 @@ const emailsDummyData = [
     id: "e106",
     subject: "Vacation Plans",
     body: "Let's plan our vacation.",
-    isRead: true,
+    isRead: false,
     isStarred: false,
     sentAt: 1645702191000, // Example timestamp, you can put any valid timestamp here
     removedAt: null,
@@ -283,19 +283,19 @@ function _createEmails() {
   let emails = utilService.loadFromStorage(STORAGE_KEY)
   if (!emails || !emails.length) {
     emails = emailsDummyData
-    // for (let i = 11; i <= 50; i++) {
-    //   emails.push({
-    //     id: `e${i}`,
-    //     subject: `Email Subject ${i}`,
-    //     body: `Email Body ${i}`,
-    //     isRead: Math.random() < 0.5,
-    //     isStarred: Math.random() < 0.5,
-    //     sentAt: 1646062191000 - i * 86400000, // Example timestamp, you can adjust as needed
-    //     removedAt: null,
-    //     from: `sender${i}@example.com`,
-    //     to: "user@appsus.com",
-    //   });
-    // }
+    for (let i = 11; i <= 50; i++) {
+      emails.push({
+        id: `e${i}`,
+        subject: `Email Subject ${i}`,
+        body: `Email Body ${i}`,
+        isRead: Math.random() < 0.5,
+        isStarred: Math.random() < 0.5,
+        sentAt: 1646062191000 - i * 86400000, // Example timestamp, you can adjust as needed
+        removedAt: null,
+        from: `sender${i}@example.com`,
+        to: "user@appsus.com",
+      })
+    }
     utilService.saveToStorage(STORAGE_KEY, emails)
   }
 }
