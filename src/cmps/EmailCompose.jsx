@@ -10,7 +10,6 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
 
   const [email, setEmail] = useState(emailService.getDefaultEmail())
   const [viewState, setViewState] = useState("normal") //minimized, normal, fullscreen
-  const [userLoc, setUserLoc] = useState(null)
 
   const draftTimeout = useRef()
   const timeOutDur = 5000
@@ -101,7 +100,13 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         }
-        setUserLoc(pos)
+        // setUserLoc(pos)
+        setEmail((prevEmail) => {
+          return {
+            ...prevEmail,
+            map: pos,
+          }
+        })
       })
     } else {
       console.log("Browser doesn't support Geolocation")
@@ -160,7 +165,7 @@ export function EmailCompose({ params, onAddEmail, onUpdateEmail }) {
             value={email.body}
             onChange={handleChange}
           ></textarea>
-          {userLoc && <GoogleMap lat={userLoc.lat} lng={userLoc.lng} />}
+          {email.map && <GoogleMap lat={email.map.lat} lng={email.map.lng} />}
           <div className="compose-action-btns">
             <button className="send-btn">send</button>
             <button

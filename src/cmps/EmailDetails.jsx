@@ -3,6 +3,7 @@ import { useNavigate, useOutletContext, useParams } from "react-router"
 import { Link } from "react-router-dom"
 import { emailService } from "../services/email.service"
 import arrowBack from "../assets/imgs/arrow_back.png"
+import GoogleMap from "./GoogleMap"
 
 export function EmailDetails() {
   const [email, setEmail] = useState(null)
@@ -112,6 +113,7 @@ export function EmailDetails() {
         ></div>
       </div>
       <div className="email-body">{email.body}</div>
+      {email.map && <GoogleMap lat={email.map.lat} lng={email.map.lng} />}
     </section>
   )
 }
