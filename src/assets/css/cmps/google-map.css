@@ -1,0 +1,29 @@
+.marker {
+    position: relative;
+    border-radius: 50%;
+    background-color: #ef3a32;
+    width: 24px;
+    height: 24px;
+}
+
+.marker::before {
+    position: absolute;
+    content: '';
+    width: 10px;
+    height: 10px;
+    top: 7px;
+    left: 7px;
+    background-color: #8b2222;
+    border-radius: 50%;
+}
+
+.marker::after {
+    position: absolute;
+    content: '';
+    width: 0px;
+    height: 0px;
+    bottom: -22px;
+    left: 2px;
+    border: 10px solid transparent;
+    border-top: 17px solid #ef3a32;
+}
